@@ -1,16 +1,18 @@
-import React from "react";
 import {
   Button,
-  Divider,
   Group,
   Modal,
   SimpleGrid,
   Stack,
   Text,
   TextInput,
-  UnstyledButton,
 } from "@mantine/core";
-import { IconChevronDown, IconX } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
+import MenuForInvoiceExportation from "./menu-for-invoice-exportation";
+import RegisterDiscountCode from "../RegisterDiscountCode";
+
+import { useForm } from "@mantine/form";
+
 interface ModalProps {
   opened: boolean;
   onClose: () => void;
@@ -19,61 +21,106 @@ export default function ModalForInvoiceExportation({
   opened,
   onClose,
 }: ModalProps) {
+  const invoiceExportationForm = useForm({
+    initialValues: {
+      userName: "",
+      projectCode: "",
+      exportDate: "",
+      goodsDescription: "",
+      count: "",
+      unitPrice: "",
+      discountCode: "",
+      tax: "",
+    },
+    validateInputOnBlur: true,
+    validate: {
+      count: (value) => (/^\d+$/.test(value) ? null : "لطفا عدد وارد کنید!"),
+    },
+  });
+  const handleResetDiscountCode = () => {
+    invoiceExportationForm.setFieldValue("discountCode", "");
+  };
+  const handleDiscountError = () => {
+    invoiceExportationForm.setErrors({
+      discountCode: "لطفا کد تخفیف را وارد کنید!",
+    });
+  };
+
   return (
     <Modal size={"lg"} opened={opened} onClose={onClose} p={"lg"}>
-      <Stack w={"100%"} p={"lg"}>
-        <Group w={"100%"} justify="space-between">
+      <Stack p={"lg"}>
+        <Group justify="space-between">
           <Text size="sm">ایجاد فاکتور دستی</Text>
           <IconX
             size={18}
             color="#667085"
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              invoiceExportationForm.reset();
+            }}
             cursor={"pointer"}
           />
         </Group>
 
-        <SimpleGrid
-          w={"100%"}
-          cols={2}
-          spacing="xl"
-          verticalSpacing="xl"
-          pt={"lg"}
-        >
+        <SimpleGrid w="100%" cols={2} spacing="xl" verticalSpacing="xl" pt="lg">
           <TextInput
             label="نام کاربر"
-            w={"100%"}
-            leftSection={
-              <>
-                <UnstyledButton>ایمیل</UnstyledButton>
-                <IconChevronDown color="black" />
-                <Divider size="xs" orientation="vertical" />
-              </>
-            }
+            value={invoiceExportationForm.values.userName}
+            leftSection={<MenuForInvoiceExportation />}
+            leftSectionWidth={"30%"}
+            {...invoiceExportationForm.getInputProps("userName")}
           ></TextInput>
-          <TextInput label="کد پروژه"></TextInput>
-          <TextInput label="تاریخ صدور"></TextInput>
-          <TextInput label="شرح کالا/خدمات"></TextInput>
-          <TextInput label="تعداد"></TextInput>
+          <TextInput
+            label="کد پروژه"
+            value={invoiceExportationForm.values.projectCode}
+            {...invoiceExportationForm.getInputProps("projectCode")}
+          ></TextInput>
+          <TextInput
+            label="تاریخ صدور"
+            value={invoiceExportationForm.values.exportDate}
+            {...invoiceExportationForm.getInputProps("exportDate")}
+          ></TextInput>
+          <TextInput
+            label="شرح کالا/خدمات"
+            value={invoiceExportationForm.values.goodsDescription}
+            {...invoiceExportationForm.getInputProps("goodsDescription")}
+          ></TextInput>
+          <TextInput
+            label="تعداد"
+            value={invoiceExportationForm.values.count}
+            {...invoiceExportationForm.getInputProps("count")}
+          ></TextInput>
           <TextInput
             label="مبلغ واحد"
-            rightSection={<UnstyledButton>ریال</UnstyledButton>}
+            value={invoiceExportationForm.values.unitPrice}
+            rightSection={<Text fz={"xs"}>ریال</Text>}
+            {...invoiceExportationForm.getInputProps("unitPrice")}
           ></TextInput>
           <TextInput
             label="کد تخفیف"
+            value={invoiceExportationForm.values.discountCode}
             rightSection={
-              <UnstyledButton style={{ color: "#4C6EF5", fontSize: 11 }}>
-                ثبت‌کد
-              </UnstyledButton>
+              <RegisterDiscountCode
+                resetDiscountCode={handleResetDiscountCode}
+                discountValue={invoiceExportationForm.values.discountCode}
+                setDiscountError={handleDiscountError}
+              />
             }
+            {...invoiceExportationForm.getInputProps("discountCode")}
           ></TextInput>
-          <TextInput label="نرخ مالیات بر ارزش افروده"></TextInput>
+          <TextInput
+            value={invoiceExportationForm.values.tax}
+            label="نرخ مالیات بر ارزش افزوده"
+            {...invoiceExportationForm.getInputProps("tax")}
+          ></TextInput>
         </SimpleGrid>
 
         <Group w={"100%"} justify="center" align="center" pt={"xl"}>
           <Button
-            w={"6.5rem"}
-            h={"2rem"}
-            style={{ fontSize: 14, fontWeight: 400 }}
+            onClick={() => {
+              invoiceExportationForm.reset();
+              onClose();
+            }}
           >
             تایید
           </Button>

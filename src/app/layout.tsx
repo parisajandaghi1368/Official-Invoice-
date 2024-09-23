@@ -1,7 +1,12 @@
 import "@mantine/core/styles.css";
 import "../shared/globals.css";
 
-import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
+import {
+  ColorSchemeScript,
+  MantineProvider,
+  createTheme,
+  rem,
+} from "@mantine/core";
 
 export const metadata = {
   title: "فاکتور رسمی",
@@ -32,9 +37,12 @@ const theme = createTheme({
         radius: "md",
         color: "indigo",
         size: "md",
+        miw: rem(104),
+        mah: rem(34),
         style: {
           boxShadow: "0px 1px 4px 0px rgba(12, 12, 13, 0.1)",
           fontWeight: 400,
+          fontSize: 16,
         },
       },
     },
@@ -45,9 +53,7 @@ const theme = createTheme({
     },
     TextInput: {
       defaultProps: {
-     
         styles: {
-          width:'22rem',
           label: {
             display: "flex",
             fontSize: 11,
@@ -57,15 +63,27 @@ const theme = createTheme({
         },
       },
     },
-    UnstyledButton:{
-      defaultProps:{
-        size:'md',
-        style:{
-          fontSize:11,
-          color:'#667085'
-        }
-      }
-    }
+    UnstyledButton: {
+      defaultProps: {
+        size: "md",
+        style: {
+          fontSize: 11,
+          color: "#667085",
+        },
+      },
+    },
+    Radio: {
+      defaultProps: {
+        size: "xs",
+        color: "indigo",
+      },
+    },
+    Menu: {
+      defaultProps: {
+        shadow: "md",
+        radius: "md",
+      },
+    },
   },
 });
 

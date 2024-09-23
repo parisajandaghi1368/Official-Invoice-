@@ -17,6 +17,7 @@ export default function SearchPart() {
     <>
       <Group mx={"17rem"} justify="space-between">
         <Input
+          rightSectionPointerEvents="auto"
           w={"40%"}
           size="md"
           placeholder="جستجو"
@@ -66,7 +67,10 @@ export default function SearchPart() {
         onClose={() => setIsExportationModalOpen(false)}
         opened={isExportationModalOpen}
       />
-      <ModalForFilterInvoice/>
+      <ModalForFilterInvoice
+        opened={isModalForFilterOpen}
+        onClose={() => setIsModalForFilterOpen(false)}
+      />
     </>
   );
 }
