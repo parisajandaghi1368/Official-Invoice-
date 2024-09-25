@@ -1,18 +1,17 @@
-import { Avatar, Flex } from "@mantine/core";
+import { Avatar, Flex, rem } from "@mantine/core";
 import Image from "next/image";
 import MapLogo from "../../../assets/map-logo.svg";
 export default function Header() {
   return (
-    <Flex bg={"indigo"} p={'xl'} >
-      <Flex w={"100%"} justify={"space-between"} align={"center"} mx={'17rem'}>
+    <Flex bg={"indigo"} p={"xl"} justify={"center"}>
+      <Flex
+        w={"100%"}
+        justify={"space-between"}
+        align={"center"}
+        maw={rem(1200)}
+      >
         <Image src={MapLogo} alt="MapLogo" />
-        <Avatar
-          className="cursor-pointer"
-          radius="xl"
-          color="blue"
-          variant="white"
-          size={"md"}
-        />
+        <Avatar radius="xl" color="blue" variant="white" size={"md"} />
       </Flex>
     </Flex>
   );

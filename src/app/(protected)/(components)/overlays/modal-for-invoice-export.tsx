@@ -6,10 +6,11 @@ import {
   Stack,
   Text,
   TextInput,
+  UnstyledButton,
 } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import MenuForInvoiceExportation from "./menu-for-invoice-exportation";
-import RegisterDiscountCode from "../RegisterDiscountCode";
+import RegisterDiscountCode from "../register-discount-code";
 
 import { useForm } from "@mantine/form";
 
@@ -47,19 +48,27 @@ export default function ModalForInvoiceExportation({
   };
 
   return (
-    <Modal size={"lg"} opened={opened} onClose={onClose} p={"lg"}>
+    <Modal
+      size={"lg"}
+      opened={opened}
+      onClose={onClose}
+      // classNames={{
+      //   header: classes.header
+      // }}
+    >
       <Stack p={"lg"}>
         <Group justify="space-between">
           <Text size="sm">ایجاد فاکتور دستی</Text>
-          <IconX
-            size={18}
-            color="#667085"
-            onClick={() => {
-              onClose();
-              invoiceExportationForm.reset();
-            }}
-            cursor={"pointer"}
-          />
+          <UnstyledButton>
+            <IconX
+              size={18}
+              color="#667085"
+              onClick={() => {
+                onClose();
+                invoiceExportationForm.reset();
+              }}
+            />
+          </UnstyledButton>
         </Group>
 
         <SimpleGrid w="100%" cols={2} spacing="xl" verticalSpacing="xl" pt="lg">

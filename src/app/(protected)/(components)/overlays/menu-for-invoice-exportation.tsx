@@ -16,9 +16,25 @@ export default function MenuForInvoiceExportation() {
         <Flex onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <UnstyledButton ml={"md"}>{userName}</UnstyledButton>
           {isMenuOpen ? (
-            <IconChevronUp size={18} color="black" cursor={"pointer"} />
+            <UnstyledButton
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <IconChevronUp size={18} color="black" />
+            </UnstyledButton>
           ) : (
-            <IconChevronDown size={18} color="black" cursor={"pointer"} />
+            <UnstyledButton
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <IconChevronDown size={18} color="black" />
+            </UnstyledButton>
           )}
 
           <Divider size="xs" orientation="vertical" />

@@ -28,13 +28,14 @@ export default function RegisterDiscountCode({
           ثبت‌کد
         </UnstyledButton>
       ) : (
-        <IconTrash
-          size={18}
-          cursor={"pointer"}
-          onClick={() => {
-            resetDiscountCode();
-          }}
-        />
+        <UnstyledButton>
+          <IconTrash
+            size={18}
+            onClick={() => {
+              resetDiscountCode();
+            }}
+          />
+        </UnstyledButton>
       )}
     </>
   );

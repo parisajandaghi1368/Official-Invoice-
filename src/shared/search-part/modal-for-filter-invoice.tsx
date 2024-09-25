@@ -10,6 +10,7 @@ import {
   Text,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
 interface ModalProps {
   opened: boolean;
@@ -33,12 +34,21 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
     validate: {},
   });
   const [radioValue, setRadioValue] = useState("all invoice");
+
   return (
     <Modal size={"80%"} opened={opened} onClose={onClose}>
       <Grid p={"md"}>
         <Grid.Col span={2}>
           <TextInput
             label="از تاریخ"
+            leftSection={
+              <IconX
+                size={16}
+                onClick={() => {
+                  console.log("filterForm.key", filterForm);
+                }}
+              />
+            }
             {...filterForm.getInputProps("fromDate")}
           ></TextInput>
         </Grid.Col>

@@ -1,21 +1,33 @@
 "use client";
 
-import { Table } from "@mantine/core";
+import { Pagination, Stack, Table } from "@mantine/core";
 import React from "react";
 import { OfficialInvoiceColumns } from "./official-invoice-data";
 import DynamicTableHeader from "./dynamic-table-header";
-export default function OfficialInvoiceTable() {
+
+import DynamicTableBody from "./dynamic-table-body";
+type OfficialInvoiceTable = {
+  showLastColumn: boolean;
+};
+export default function OfficialInvoiceTable({
+  showLastColumn = true,
+}: OfficialInvoiceTable) {
   return (
-    <Table
-      borderColor="#D0D5DD"
-      withTableBorder
-      withColumnBorders
-      withRowBorders
-      highlightOnHover
-      
-    >
-      <DynamicTableHeader Columns={OfficialInvoiceColumns} />
-      <Table.Tbody></Table.Tbody>
-    </Table>
+    <Stack w={"100%"} gap={550} align="center">
+      <Table
+        borderColor="#D0D5DD"
+        withTableBorder
+        withColumnBorders
+        withRowBorders
+        highlightOnHover
+      >
+        <DynamicTableHeader
+          columns={OfficialInvoiceColumns}
+          showLastColumn={showLastColumn}
+        />
+        <DynamicTableBody showLastColumn={showLastColumn} />
+      </Table>
+      <Pagination total={8}> </Pagination>
+    </Stack>
   );
 }

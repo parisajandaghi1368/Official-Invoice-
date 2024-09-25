@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function Page() {
-  redirect("/officialinvoice");
+  redirect("/official-invoice");
 }
