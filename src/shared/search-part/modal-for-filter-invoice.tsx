@@ -126,7 +126,7 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
       <Group w={"100%"} justify="flex-end" mt={"xl"} p={"md"}>
         <Button
           variant="white"
-          style={{ fontSize: 14, fontWeight: 400, color: "black" }}
+          style={{ fontSize: 16, fontWeight: 400, color: "black" }}
           onClick={() => {
             filterForm.reset();
           }}

@@ -7,7 +7,8 @@ import {
   createTheme,
   rem,
 } from "@mantine/core";
-
+import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
 export const metadata = {
   title: "فاکتور رسمی",
   description: "I have followed setup instructions carefully",
@@ -15,9 +16,8 @@ export const metadata = {
 
 const theme = createTheme({
   fontFamily: "IRANSansWeb",
-
   primaryColor: "indigo",
-
+  defaultRadius: "md",
   components: {
     Modal: {
       defaultProps: {
@@ -34,7 +34,6 @@ const theme = createTheme({
     },
     Button: {
       defaultProps: {
-        radius: "md",
         color: "indigo",
         size: "md",
         miw: rem(104),
@@ -47,9 +46,7 @@ const theme = createTheme({
       },
     },
     Input: {
-      defaultProps: {
-        radius: "md",
-      },
+      defaultProps: {},
     },
     TextInput: {
       defaultProps: {
@@ -81,7 +78,20 @@ const theme = createTheme({
     Menu: {
       defaultProps: {
         shadow: "md",
-        radius: "md",
+      },
+    },
+    Mark: {
+      defaultProps: {
+        color: "#D7E1F9",
+        style: {
+          borderRadius: 6,
+          minWidth: rem(70),
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 4,
+          color: "#4C6EF5",
+        },
       },
     },
   },
@@ -98,7 +108,10 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <Notifications position="top-center" autoClose={2000} />
+          {children}
+        </MantineProvider>
       </body>
     </html>
   );

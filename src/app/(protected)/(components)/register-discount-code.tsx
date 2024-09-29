@@ -1,4 +1,4 @@
-import { UnstyledButton } from "@mantine/core";
+import { UnstyledButton, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
 import React, { useState } from "react";
@@ -18,14 +18,15 @@ export default function RegisterDiscountCode({
     <>
       {!isDiscountCodeButtonClick ? (
         <UnstyledButton
-          style={{ color: "#4C6EF5", fontSize: 11 }}
           onClick={() => {
             discountValue.length === 0
               ? setDiscountError()
               : setISDiscountCodeButtonClick(true);
           }}
         >
-          ثبت‌کد
+          <Text c="#4C6EF5" fz="xs">
+            ثبت‌کد
+          </Text>
         </UnstyledButton>
       ) : (
         <UnstyledButton>

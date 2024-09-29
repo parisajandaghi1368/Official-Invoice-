@@ -13,7 +13,7 @@ export default function OfficialInvoiceTable({
   showLastColumn = true,
 }: OfficialInvoiceTable) {
   return (
-    <Stack w={"100%"} gap={550} align="center">
+    <Stack w={"100%"} align="center">
       <Table
         borderColor="#D0D5DD"
         withTableBorder

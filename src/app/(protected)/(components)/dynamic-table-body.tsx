@@ -1,12 +1,13 @@
 import { Center, Group, Table, Tooltip, UnstyledButton } from "@mantine/core";
 import {
+  IconBan,
   IconCheck,
   IconDownload,
   IconPencilMinus,
-  IconXboxX,
 } from "@tabler/icons-react";
 import React, { useState } from "react";
-import ModalForEditInvoice from "./overlays/modal-for-edit-invoice";
+import ModalForOperationsOnInvoices from "./overlays/modal-for-edit-invoice";
+import ModalForDownloadInvoice from "./overlays/modal-for-download-invoice";
 
 type DynamicTableBodyProps = {
   showLastColumn: boolean;
@@ -21,8 +22,8 @@ export default function DynamicTableBody({
       plan: "نوع پلن",
       email: "ایمیل",
       mobile: "شماره موبایل",
-      invoiceNum: "شماره فاکتور رسمی",
-      company: "سازمان",
+      invoiceNum: "۰۱۱۴",
+      company: "نقش اول کیفیت ",
       date: "تاریخ صدور",
       invoiceType: "دستی",
       totalPrice: "مبلغ کل ریال",
@@ -33,14 +34,18 @@ export default function DynamicTableBody({
       plan: "نوع پلن",
       email: "ایمیل",
       mobile: "شماره موبایل",
-      invoiceNum: "شماره فاکتور رسمی",
-      company: "سازمان",
+      invoiceNum: "۰۱۱۵",
+      company: "اپل",
       date: "تاریخ صدور",
       invoiceType: "آنلاین",
       totalPrice: "مبلغ کل ریال",
     },
   ];
   const [isModalForEditOpen, setIsModalForEditOpen] = useState(false);
+  const [isModalForDownloadOpen, setIsModalForDownLoadOpen] = useState(false);
+  const [companyName, setCompayName] = useState("");
+  const [modalText, setModalText] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState("");
   return (
     <>
       <Table.Tbody>
@@ -85,20 +90,36 @@ export default function DynamicTableBody({
                         </UnstyledButton>
                       </Tooltip>
                       <Tooltip label={"دانلود فاکتور"}>
-                        <UnstyledButton>
+                        <UnstyledButton
+                          onClick={() => {
+                            setIsModalForDownLoadOpen(true);
+                            setCompayName(item.company)
+                            setInvoiceNumber(item.invoiceNum);
+                          }}
+                        >
                           <IconDownload size={20} />
                         </UnstyledButton>
                       </Tooltip>
                       <Tooltip label={"ویرایش فاکتور"}>
                         <UnstyledButton
-                          onClick={() => setIsModalForEditOpen(true)}
+                          onClick={() => {
+                            setIsModalForEditOpen(true);
+                            setCompayName(item.company);
+                            setModalText("ویرایش");
+                          }}
                         >
                           <IconPencilMinus size={20} />
                         </UnstyledButton>
                       </Tooltip>
                       <Tooltip label={"ابطال فاکتور"}>
-                        <UnstyledButton>
-                          <IconXboxX size={20} />
+                        <UnstyledButton
+                          onClick={() => {
+                            setIsModalForEditOpen(true);
+                            setCompayName(item.company);
+                            setModalText("ابطال");
+                          }}
+                        >
+                          <IconBan size={20} />
                         </UnstyledButton>
                       </Tooltip>
                     </Group>
@@ -117,11 +138,21 @@ export default function DynamicTableBody({
             )}
           </Table.Tr>
         ))}
-        <ModalForEditInvoice
+        <ModalForDownloadInvoice
+          opened={isModalForDownloadOpen}
+          companyName={companyName}
+          invoiceNumber={invoiceNumber}
+          onClose={() => {
+            setIsModalForDownLoadOpen(false);
+          }}
+        />
+        <ModalForOperationsOnInvoices
           opened={isModalForEditOpen}
           onClose={() => setIsModalForEditOpen(false)}
-          company={""}
+          companyName={companyName}
+          modalText={modalText}
         />
+        
       </Table.Tbody>
     </>
   );
