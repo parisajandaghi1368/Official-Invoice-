@@ -26,9 +26,9 @@ export default function ModalForInvoiceExportation({
   opened,
   onClose,
 }: ModalProps) {
-  const [confirm, setConfirm] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [isInputDisabled, setIsInputDisabled] = useState(false);
+  // const [confirm, setConfirm] = useState(false);
+  // const [checked, setChecked] = useState(false);
+  // const [isInputDisabled, setIsInputDisabled] = useState(false);
   const invoiceExportationForm = useForm<
     z.infer<typeof ExportationFormValidation>
   >({
@@ -93,65 +93,43 @@ export default function ModalForInvoiceExportation({
           >
             <TextInput
               label="نام کاربر"
-              // value={invoiceExportationForm.values.userName}
-              disabled={isInputDisabled}
               leftSection={<MenuForInvoiceExportation />}
               leftSectionWidth={"30%"}
               {...invoiceExportationForm.getInputProps("userName")}
             ></TextInput>
             <TextInput
               label="کد پروژه"
-              disabled={isInputDisabled}
-              // value={invoiceExportationForm.values.projectCode}
               {...invoiceExportationForm.getInputProps("projectCode")}
             ></TextInput>
             <TextInput
               label="تاریخ صدور"
-              disabled={isInputDisabled}
-              // value={invoiceExportationForm.values.exportDate}
               {...invoiceExportationForm.getInputProps("exportDate")}
             ></TextInput>
             <TextInput
               label="شرح کالا/خدمات"
-              disabled={isInputDisabled}
-              // value={invoiceExportationForm.values.goodsDescription}
               {...invoiceExportationForm.getInputProps("goodsDescription")}
             ></TextInput>
             <TextInput
               label="تعداد"
-              disabled={isInputDisabled}
-              // value={invoiceExportationForm.values.count}
               {...invoiceExportationForm.getInputProps("count")}
             ></TextInput>
             <TextInput
               label="مبلغ واحد"
-              disabled={isInputDisabled}
-              // value={invoiceExportationForm.values.unitPrice}
               rightSection={<Text fz={"xs"}>ریال</Text>}
               {...invoiceExportationForm.getInputProps("unitPrice")}
             ></TextInput>
             <TextInput
               label="کد تخفیف"
-              disabled={isInputDisabled}
-              // value={invoiceExportationForm.values.discountCode}
               rightSection={
-                isInputDisabled ? (
-                  <Text fz="xs" c="dimmed">
-                    ثبت‌کد
-                  </Text>
-                ) : (
-                  <RegisterDiscountCode
-                    resetDiscountCode={handleResetDiscountCode}
-                    discountValue={"invoiceExportationForm.values.discountCode"}
-                    setDiscountError={handleDiscountError}
-                  />
-                )
+                <RegisterDiscountCode
+                  resetDiscountCode={handleResetDiscountCode}
+                  discountValue={"invoiceExportationForm.values.discountCode"}
+                  setDiscountError={handleDiscountError}
+                />
               }
               {...invoiceExportationForm.getInputProps("discountCode")}
             ></TextInput>
             <TextInput
-              // value={invoiceExportationForm.values.tax}
-              disabled={isInputDisabled}
               label="نرخ مالیات بر ارزش افزوده"
               {...invoiceExportationForm.getInputProps("tax")}
             ></TextInput>

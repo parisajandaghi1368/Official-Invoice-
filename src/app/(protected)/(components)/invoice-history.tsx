@@ -7,12 +7,17 @@ import React, { useState } from "react";
 
 export default function InvoiceHistory() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const router = useRouter();
   return (
     <>
       <Group>
         <Tooltip label="فاکتور‌های ابطالی">
-          <ActionIcon onClick={() => router.push("/cancellation-invoices")}>
+          <ActionIcon
+            onClick={() => {
+              router.push("/cancellation-invoices");
+            }}
+          >
             <IconFileX size={20} />
           </ActionIcon>
         </Tooltip>
@@ -26,7 +31,11 @@ export default function InvoiceHistory() {
           </ActionIcon>
         </Tooltip>
       </Group>
-      <InvoicesHistoryDrawer opened={isDrawerOpen} onClose={()=>setIsDrawerOpen(false)}/>
+
+      <InvoicesHistoryDrawer
+        opened={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      />
     </>
   );
 }
