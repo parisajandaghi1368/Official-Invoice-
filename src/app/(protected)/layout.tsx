@@ -1,12 +1,18 @@
 import React from "react";
 import Header from "./(components)/header";
 import { Stack } from "@mantine/core";
-
-export default function Layout({ children }: { children: React.ReactNode }) {
+import ProtectedPageWrapper from "./(components)/protected-page-wrapper";
+export default function ProtectedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <Stack w={"100%"} h={"100%"} >
-      <Header />
-      {children}
-    </Stack>
+    <ProtectedPageWrapper>
+      <Stack w={"100%"} h={"100%"}>
+        <Header />
+        {children}
+      </Stack>
+    </ProtectedPageWrapper>
   );
 }
