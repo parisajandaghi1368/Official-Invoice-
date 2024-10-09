@@ -53,7 +53,8 @@ const theme = createTheme({
         styles: {
           label: {
             display: "flex",
-            fontSize: 11,
+            fontSize: 12,
+            fontWeight: 500,
             marginRight: 2,
             marginBottom: 5,
           },
@@ -66,6 +67,9 @@ const theme = createTheme({
         style: {
           fontSize: 11,
           color: "#667085",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         },
       },
     },

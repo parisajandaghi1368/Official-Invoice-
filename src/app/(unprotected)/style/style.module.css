@@ -1,0 +1,11 @@
+.input::placeholder {
+  text-align: right;
+}
+
+.input {
+  text-align: left;
+}
+.label {
+  font-size: 14;
+  margin-bottom: 5;
+}
