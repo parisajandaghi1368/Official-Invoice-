@@ -10,7 +10,7 @@ import {
   rem,
 } from "@mantine/core";
 
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import classes from "../style/style.module.css";
 import { useRouter } from "next/navigation";
 import PasswordInput from "../(components)/password-input";
@@ -22,6 +22,7 @@ import { login } from "./auth";
 import { notifications } from "@mantine/notifications";
 import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
 import { IconRefresh } from "@tabler/icons-react";
+
 export default function Login() {
   const router = useRouter();
 
@@ -164,7 +165,7 @@ export default function Login() {
         }}
         styles={{ label: { fontSize: 14, marginBottom: 5 } }}
         {...form.getInputProps("username")}
-        onInput={(event: any) => {
+        onInput={(event: ChangeEvent<HTMLInputElement>) => {
           const value = event.target.value;
           const regX = /[0-9]{11}/g;
           const numberValidation = value.match(regX);

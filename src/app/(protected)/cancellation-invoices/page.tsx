@@ -2,11 +2,11 @@
 import { Group, Stack, Text, UnstyledButton, rem } from "@mantine/core";
 import React from "react";
 
-import OfficialInvoiceTable from "../(components)/official-invoice-table";
+import OfficialInvoiceTable from "../official-invoice/components/official-invoice-table";
 
 import { IconArrowNarrowLeft } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import Search from "../(components)/search";
+import Search from "../official-invoice/components/search";
 
 export default function CancellationInvoices() {
   const router = useRouter();

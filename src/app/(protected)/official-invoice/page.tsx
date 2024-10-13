@@ -1,8 +1,8 @@
 import { Group, Stack, Text, rem } from "@mantine/core";
 import React from "react";
-import Search from "../(components)/search";
-import InvoiceHistory from "../(components)/invoice-history";
-import OfficialInvoiceTable from "../(components)/official-invoice-table";
+import Search from "./components/search";
+import InvoiceHistory from "../(invoice-history)/components/invoice-history";
+import OfficialInvoiceTable from "./components/official-invoice-table";
 
 export default function OfficialInvoicePage() {
   return (

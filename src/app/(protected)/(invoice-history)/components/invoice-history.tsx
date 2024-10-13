@@ -2,7 +2,7 @@
 import { ActionIcon, Group, Tooltip } from "@mantine/core";
 import { IconFileX, IconHistory } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import InvoicesHistoryDrawer from "./overlays/invoices-history-drawer";
+import InvoicesHistoryDrawer from "./invoices-history-drawer";
 import React, { useState } from "react";
 
 export default function InvoiceHistory() {

@@ -6,8 +6,8 @@ import {
   IconPencilMinus,
 } from "@tabler/icons-react";
 import React, { useState } from "react";
-import ModalForOperationsOnInvoices from "./overlays/modal-for-edit-invoice";
-import ModalForDownloadInvoice from "./overlays/modal-for-download-invoice";
+import ModalForOperationsOnInvoices from "./modal-for-edit-invoice";
+import ModalForDownloadInvoice from "./modal-for-download-invoice";
 
 type DynamicTableBodyProps = {
   showLastColumn: boolean;
@@ -93,7 +93,7 @@ export default function DynamicTableBody({
                         <UnstyledButton
                           onClick={() => {
                             setIsModalForDownLoadOpen(true);
-                            setCompayName(item.company)
+                            setCompayName(item.company);
                             setInvoiceNumber(item.invoiceNum);
                           }}
                         >
@@ -152,7 +152,6 @@ export default function DynamicTableBody({
           companyName={companyName}
           modalText={modalText}
         />
-        
       </Table.Tbody>
     </>
   );

@@ -1,41 +1,44 @@
 import {
   Button,
+  Flex,
   Group,
   Modal,
-  SimpleGrid,
   Stack,
   Text,
   UnstyledButton,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { IconX } from "@tabler/icons-react";
-import React from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { z } from "zod";
-import { ChangePasswordValidation } from "../../(utils)/schemas";
+import { changePasswordValidationSchema } from "../tools/schema";
 import useToken from "@/shared/hooks/use-token";
 import axios from "axios";
 import { urls } from "@/shared/config/urls";
 import useUser from "@/shared/hooks/use-user";
 import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
 import { notifications } from "@mantine/notifications";
-import ChangingPasswordInput from "../changing-password-input";
+import ChangingPasswordInput from "./changing-password-input";
+
 type ModalForChangingPasswordProps = {
   onClose: () => void;
   opened: boolean;
 };
+
 export default function ModalForChangingPassword({
   onClose,
   opened,
 }: ModalForChangingPasswordProps) {
   const { token: userToken } = useToken();
   const { user } = useUser();
-  const form = useForm<z.infer<typeof ChangePasswordValidation>>({
+
+  const form = useForm<z.infer<typeof changePasswordValidationSchema>>({
     initialValues: {
       current_password: "",
       old_password: "",
     },
     validateInputOnBlur: true,
-    validate: zodResolver(ChangePasswordValidation),
+    validate: zodResolver(changePasswordValidationSchema),
   });
   const passwordInfo = {
     current_password: form.values.current_password,
@@ -51,6 +54,11 @@ export default function ModalForChangingPassword({
         await axios.patch(`${urls.users}/${user?.id}`, passwordInfo, {
           headers: getCommonHeaders({ token: userToken }),
         });
+        notifications.show({
+          message: "رمز عبور با موفقیت تغییر کرد!",
+          color: "green",
+        });
+        onClose();
       } catch (error) {
         notifications.show({
           message: "متاسفانه مشکلی پیش آمده است!",
@@ -64,6 +72,9 @@ export default function ModalForChangingPassword({
       });
     }
   }
+  useEffect(() => {
+    if (!opened) form.reset();
+  }, [form, opened]);
   return (
     <Modal onClose={onClose} opened={opened} size={"xl"}>
       <Stack gap="lg">
@@ -78,12 +89,13 @@ export default function ModalForChangingPassword({
             />
           </UnstyledButton>
         </Group>
-        <SimpleGrid cols={2}>
+
+        <Flex justify={"space-around"}>
           <ChangingPasswordInput
             label="رمز عبور فعلی"
             inputProp={form.getInputProps("old_password")}
             inputValue={form.values.old_password}
-            onChange={(event: any) =>
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
               form.setFieldValue("old_password", event.target.value)
             }
           />
@@ -91,12 +103,12 @@ export default function ModalForChangingPassword({
             label="رمز عبور جدید"
             inputValue={form.values.current_password}
             inputProp={form.getInputProps("current_password")}
-            onChange={(event: any) =>
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
               form.setFieldValue("current_password", event.target.value)
             }
           />
-        </SimpleGrid>
-        <Group justify="flex-end" align="center" px={"xl"} py={"lg"}>
+        </Flex>
+        <Group justify="flex-end" ml={"xl"} py={"lg"}>
           <Button
             onClick={() => {
               changePassword();

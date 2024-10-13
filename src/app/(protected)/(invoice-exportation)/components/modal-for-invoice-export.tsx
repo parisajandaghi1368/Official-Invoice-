@@ -12,12 +12,16 @@ import {
 } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import MenuForInvoiceExportation from "./menu-for-invoice-exportation";
-import RegisterDiscountCode from "../register-discount-code";
+import RegisterDiscountCode from "./register-discount-code";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useForm } from "@mantine/form";
-
+import newClass from "../style/calender.module.css";
 import z from "zod";
-import { ExportationFormValidation } from "../../(utils)/schemas";
+import { exportationFormValidationSchema } from "../tools/schema";
+import CustomCalendar, { DateFormatter } from "./custom-calender";
+import { useEffect, useState } from "react";
+import { notifications } from "@mantine/notifications";
+
 interface ModalProps {
   opened: boolean;
   onClose: () => void;
@@ -26,11 +30,28 @@ export default function ModalForInvoiceExportation({
   opened,
   onClose,
 }: ModalProps) {
-  // const [confirm, setConfirm] = useState(false);
-  // const [checked, setChecked] = useState(false);
-  // const [isInputDisabled, setIsInputDisabled] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [isInputDisabled, setIsInputDisabled] = useState(false);
+  const [date, setDate] = useState(new Date());
+
+  const today = new Date();
+  useEffect(() => {
+    const validDate = date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
+
+    if (validDate) {
+      notifications.show({
+        id: "validdate",
+        message: "امکان انتخاب تاریخ در گذشته وجود ندارد!",
+        color: "yellow",
+      });
+      setDate(today);
+    }
+  }, [date]);
+  // const formattedDate = DateFormatter(date);
+
   const invoiceExportationForm = useForm<
-    z.infer<typeof ExportationFormValidation>
+    z.infer<typeof exportationFormValidationSchema>
   >({
     initialValues: {
       userName: "",
@@ -43,7 +64,7 @@ export default function ModalForInvoiceExportation({
       tax: "",
     },
     validateInputOnBlur: true,
-    validate: zodResolver(ExportationFormValidation),
+    validate: zodResolver(exportationFormValidationSchema),
   });
   const handleResetDiscountCode = () => {
     invoiceExportationForm.setFieldValue("discountCode", "");
@@ -56,7 +77,11 @@ export default function ModalForInvoiceExportation({
   const handleSubmit = () => {
     const { hasErrors } = invoiceExportationForm.validate();
     if (hasErrors) return;
+    setConfirm(true);
   };
+  useEffect(() => {
+    if (!opened) invoiceExportationForm.reset();
+  }, [invoiceExportationForm, opened]);
   return (
     <>
       <Modal
@@ -65,9 +90,6 @@ export default function ModalForInvoiceExportation({
         onClose={() => {
           onClose();
         }}
-        // classNames={{
-        //   header: classes.header
-        // }}
       >
         <Stack p={"lg"}>
           <Group justify="space-between">
@@ -101,10 +123,13 @@ export default function ModalForInvoiceExportation({
               label="کد پروژه"
               {...invoiceExportationForm.getInputProps("projectCode")}
             ></TextInput>
-            <TextInput
-              label="تاریخ صدور"
-              {...invoiceExportationForm.getInputProps("exportDate")}
-            ></TextInput>
+
+            <CustomCalendar
+              date={date}
+              setDate={setDate}
+              className={newClass["limitation-date"]}
+              label=" محدودیت تاریخ"
+            />
             <TextInput
               label="شرح کالا/خدمات"
               {...invoiceExportationForm.getInputProps("goodsDescription")}
@@ -123,7 +148,7 @@ export default function ModalForInvoiceExportation({
               rightSection={
                 <RegisterDiscountCode
                   resetDiscountCode={handleResetDiscountCode}
-                  discountValue={"invoiceExportationForm.values.discountCode"}
+                  discountValue={invoiceExportationForm.values.discountCode}
                   setDiscountError={handleDiscountError}
                 />
               }
@@ -134,7 +159,7 @@ export default function ModalForInvoiceExportation({
               {...invoiceExportationForm.getInputProps("tax")}
             ></TextInput>
           </SimpleGrid>
-          {/* {confirm && (
+          {confirm && (
             <Checkbox
               label="از صدور فاکتور اطمینان دارم!"
               size="xs"
@@ -146,9 +171,9 @@ export default function ModalForInvoiceExportation({
                 console.log("isInputDisabled", isInputDisabled);
               }}
             />
-          )} */}
+          )}
           <Group w="100%" justify="center" align="center" pt="xl">
-            {/* {confirm ? (
+            {confirm ? (
               <Group w="100%" justify="center">
                 <Button
                   variant="white"
@@ -172,21 +197,14 @@ export default function ModalForInvoiceExportation({
             ) : (
               <Button
                 onClick={() => {
-                  setConfirm(true);
-                  setIsInputDisabled(true);
+                  // setConfirm(true);
+                  // setIsInputDisabled(true);
+                  handleSubmit();
                 }}
               >
                 تایید
               </Button>
-            )} */}
-            <Button
-              onClick={() => {
-                // setConfirm(true);
-                handleSubmit();
-              }}
-            >
-              تایید
-            </Button>
+            )}
           </Group>
         </Stack>
       </Modal>

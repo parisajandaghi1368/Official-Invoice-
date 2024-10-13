@@ -1,14 +1,14 @@
 "use client";
-import { TextInput, UnstyledButton, rem } from "@mantine/core";
+import { TextInput, TextInputProps, UnstyledButton, rem } from "@mantine/core";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
-import { useState } from "react";
-import classes from "../../(unprotected)/style/style.module.css";
+import { ChangeEvent, useState } from "react";
+import classes from "../style/style.module.css";
 
 type PasswordInputProps = {
   label: string;
-  inputProp?: any;
+  inputProp?: TextInputProps;
   inputValue?: string;
-  onChange: (value: any) => void;
+  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
 };
 export default function ChangingPasswordInput({
   inputProp,

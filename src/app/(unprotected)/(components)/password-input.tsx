@@ -1,17 +1,21 @@
-import { TextInput, UnstyledButton, rem } from "@mantine/core";
+import { TextInput, TextInputProps, UnstyledButton } from "@mantine/core";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import { useState } from "react";
 import classes from "../style/style.module.css";
 
 type PasswordInputProps = {
   label: string;
-  inputProp?: any;
-  inputValue?: (event: any) => void;
+  inputProp?: TextInputProps;
+  inputValue?: string;
+  width?: string;
+  height?: string;
 };
 export default function PasswordInput({
   inputProp,
   label,
   inputValue,
+  width,
+  height,
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -25,6 +29,8 @@ export default function PasswordInput({
       type={showPassword ? "text" : "password"}
       autoComplete="current-password"
       withAsterisk
+      w={width}
+      h={height}
       placeholder="رمز عبور"
       {...inputProp}
       leftSection={
