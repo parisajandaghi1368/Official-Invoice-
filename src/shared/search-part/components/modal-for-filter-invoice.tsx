@@ -19,12 +19,11 @@ import newClass from "../style/calender.module.css";
 import { zodResolver } from "mantine-form-zod-resolver";
 import CustomCalendar from "@/app/(protected)/(invoice-exportation)/components/custom-calender";
 import useOfficialInvoices from "@/app/(protected)/official-invoice/hooks/use-official-invoice";
-import { Client, Invoice } from "@/shared/utils/types";
+import { Invoice } from "@/shared/utils/types";
 
 interface ModalProps {
   opened: boolean;
   onClose: () => void;
-  invoices: Invoice[];
 }
 
 export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
@@ -48,14 +47,14 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
   const [radioValue, setRadioValue] = useState("all invoice");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  const [value, setValue] = useState<string[]>([]);
+  const [email, setEmail] = useState<string[]>([]);
+
   const userName = invoices
     ?.map((item: Invoice) => item.client?.user?.username)
     .filter((username: string) => username !== undefined);
-  const email = userName?.filter(
+  const emailData = userName?.filter(
     (email: string, index: string) => userName.indexOf(email) === index
   );
-  console.log("value", value);
 
   return (
     <Modal size={"80%"} opened={opened} onClose={onClose}>
@@ -176,12 +175,12 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
             label="ایمیل"
             maxValues={2}
             {...filterForm.getInputProps("email")}
-            data={email}
-            value={value}
+            data={emailData}
+            value={email}
             searchable
             withScrollArea={false}
             styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-            onChange={(newValue: string[]) => setValue(newValue)}
+            onChange={(newValue: string[]) => setEmail(newValue)}
           />
         </Grid.Col>
         <Grid.Col span={4}>
@@ -217,7 +216,7 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
         </Button>
         <Button
           onClick={() => {
-            console.log({ value: value });
+            console.log({ value: email });
           }}
         >
           تایید
