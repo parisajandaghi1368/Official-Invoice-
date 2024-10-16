@@ -6,5 +6,6 @@ const urls = {
   captcha: `${BASEURL}`,
   baseRegister: `${BASEURL}/register`,
   users: `${BASEURL}/register/users`,
+  invoices: `${BASEURL}/register/invoices`,
 };
 export { urls };

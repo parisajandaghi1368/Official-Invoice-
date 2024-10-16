@@ -1,4 +1,4 @@
-import ModalForFilterInvoice from "./modal-for-filter-invoice";
+import ModalForFilterInvoice from "./components/modal-for-filter-invoice";
 import { Button, Divider, Flex, Input, rem } from "@mantine/core";
 import {
   IconChevronDown,
@@ -11,7 +11,6 @@ export default function SearchInput() {
   const [isModalForFilterOpen, setIsModalForFilterOpen] = useState(false);
   return (
     <>
-      {" "}
       <Input
         rightSectionPointerEvents="auto"
         rightSectionWidth={rem(165)}
@@ -40,7 +39,7 @@ export default function SearchInput() {
             </Button>
           </Flex>
         }
-      />{" "}
+      />
       <ModalForFilterInvoice
         opened={isModalForFilterOpen}
         onClose={() => setIsModalForFilterOpen(false)}

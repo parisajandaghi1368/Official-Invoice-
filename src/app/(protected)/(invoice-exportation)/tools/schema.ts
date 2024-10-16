@@ -31,7 +31,7 @@ export const exportationFormValidationSchema = z.object({
   projectCode: z.string().regex(/^[0-9]{1,4}$/, {
     message: "کد پروژه را وارد کنید.این فیلد باید عدد باشد!",
   }),
-  exportDate: z.string().min(2, { message: "این فیلد نمی‌تواند خالی باشد!" }),
+  exportDate: z.string(),
   goodsDescription: z
     .string()
     .min(2, { message: "این فیلد نمی‌تواند خالی باشد!" }),
@@ -41,6 +41,6 @@ export const exportationFormValidationSchema = z.object({
   unitPrice: z
     .string()
     .regex(/^\d+$/, { message: "این فیلد باید یک  مقدار صحیح مثبت باشد !" }),
-  discountCode: z.string().min(2, { message: "این فیلد نمی‌تواند خالی باشد!" }),
+  discountCode: z.string(),
   tax: z.string().min(2, { message: "این فیلد نمی‌تواند خالی باشد!" }),
 });

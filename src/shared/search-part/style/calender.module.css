@@ -1,0 +1,20 @@
+.form-date {
+  position: absolute !important;
+  z-index: 9999;
+  top: -12px;
+  right: 300px;
+}
+.to-date {
+  position: absolute !important;
+  z-index: 9999;
+  top: -12px;
+  right: 140px;
+}
+
+.grayBackground {
+    background-color: #f8f9fa; /* Light gray */
+  }
+  
+  .focused {
+    background-color: #f8f9fa; /* Light gray */
+  }

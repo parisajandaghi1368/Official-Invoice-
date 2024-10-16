@@ -9,12 +9,14 @@ interface CalenderParams {
   setDate: (date: Date) => void;
   label: string;
   className: string;
+  disable?: boolean;
 }
 export default function CustomCalendar({
   date,
   setDate,
   label,
   className,
+  disable,
 }: CalenderParams) {
   const [showCalendar, setShowCalendar] = useState(false);
   const dateFormatter = useMemo(() => new Intl.DateTimeFormat("fa-IR"), []);
@@ -25,11 +27,9 @@ export default function CustomCalendar({
     <CalendarProvider locale="fa" direction="rtl">
       <Stack pos="relative" ref={calendarContainerRef}>
         <TextInput
-          w={rem(258)}
-          h={rem(36)}
+          disabled={disable}
           label={label}
           value={dateFormatter.format(date)}
-          // className="w-[280px] h-[36px] flex items-center cursor-pointer border-[#CFD8DC] rounded-lg p-2"
           onClick={() => {
             setShowCalendar((s) => !s);
           }}

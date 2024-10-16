@@ -12,13 +12,13 @@ import {
 } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import MenuForInvoiceExportation from "./menu-for-invoice-exportation";
-import RegisterDiscountCode from "./register-discount-code";
+import DiscountCodeInput from "./register-discount-code";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useForm } from "@mantine/form";
 import newClass from "../style/calender.module.css";
 import z from "zod";
 import { exportationFormValidationSchema } from "../tools/schema";
-import CustomCalendar, { DateFormatter } from "./custom-calender";
+import CustomCalendar from "./custom-calender";
 import { useEffect, useState } from "react";
 import { notifications } from "@mantine/notifications";
 
@@ -76,11 +76,17 @@ export default function ModalForInvoiceExportation({
   };
   const handleSubmit = () => {
     const { hasErrors } = invoiceExportationForm.validate();
+    console.log({ hasErrors });
+
     if (hasErrors) return;
     setConfirm(true);
+    console.log("dfsdf");
   };
   useEffect(() => {
-    if (!opened) invoiceExportationForm.reset();
+    if (!opened) {
+      invoiceExportationForm.reset();
+      setConfirm(false);
+    }
   }, [invoiceExportationForm, opened]);
   return (
     <>
@@ -100,12 +106,13 @@ export default function ModalForInvoiceExportation({
                 color="#667085"
                 onClick={() => {
                   onClose();
+                  setConfirm(!confirm);
+                  setIsInputDisabled(false);
                   invoiceExportationForm.reset();
                 }}
               />
             </UnstyledButton>
           </Group>
-
           <SimpleGrid
             w="100%"
             cols={2}
@@ -115,47 +122,50 @@ export default function ModalForInvoiceExportation({
           >
             <TextInput
               label="نام کاربر"
+              disabled={isInputDisabled}
               leftSection={<MenuForInvoiceExportation />}
               leftSectionWidth={"30%"}
               {...invoiceExportationForm.getInputProps("userName")}
             ></TextInput>
             <TextInput
               label="کد پروژه"
+              disabled={isInputDisabled}
               {...invoiceExportationForm.getInputProps("projectCode")}
             ></TextInput>
-
             <CustomCalendar
               date={date}
+              disable={isInputDisabled}
               setDate={setDate}
               className={newClass["limitation-date"]}
               label=" محدودیت تاریخ"
             />
             <TextInput
               label="شرح کالا/خدمات"
+              disabled={isInputDisabled}
               {...invoiceExportationForm.getInputProps("goodsDescription")}
             ></TextInput>
             <TextInput
               label="تعداد"
+              disabled={isInputDisabled}
               {...invoiceExportationForm.getInputProps("count")}
             ></TextInput>
             <TextInput
               label="مبلغ واحد"
+              disabled={isInputDisabled}
               rightSection={<Text fz={"xs"}>ریال</Text>}
               {...invoiceExportationForm.getInputProps("unitPrice")}
             ></TextInput>
-            <TextInput
-              label="کد تخفیف"
-              rightSection={
-                <RegisterDiscountCode
-                  resetDiscountCode={handleResetDiscountCode}
-                  discountValue={invoiceExportationForm.values.discountCode}
-                  setDiscountError={handleDiscountError}
-                />
-              }
-              {...invoiceExportationForm.getInputProps("discountCode")}
-            ></TextInput>
+            <DiscountCodeInput
+              resetDiscountCode={handleResetDiscountCode}
+              discountValue={invoiceExportationForm.values.discountCode}
+              setDiscountError={handleDiscountError}
+              inputProp={invoiceExportationForm.getInputProps("discountCode")}
+              disable={isInputDisabled}
+            />
+
             <TextInput
               label="نرخ مالیات بر ارزش افزوده"
+              disabled={isInputDisabled}
               {...invoiceExportationForm.getInputProps("tax")}
             ></TextInput>
           </SimpleGrid>
@@ -167,7 +177,7 @@ export default function ModalForInvoiceExportation({
               mt={"md"}
               onChange={(event) => {
                 setChecked(event.currentTarget.checked);
-                setIsInputDisabled(!event.currentTarget.checked);
+                setIsInputDisabled(!isInputDisabled);
                 console.log("isInputDisabled", isInputDisabled);
               }}
             />
@@ -180,6 +190,7 @@ export default function ModalForInvoiceExportation({
                   style={{ fontSize: 16, fontWeight: 400, color: "black" }}
                   onClick={() => {
                     setConfirm(!confirm);
+                    setIsInputDisabled(false);
                   }}
                 >
                   انصراف
@@ -197,8 +208,6 @@ export default function ModalForInvoiceExportation({
             ) : (
               <Button
                 onClick={() => {
-                  // setConfirm(true);
-                  // setIsInputDisabled(true);
                   handleSubmit();
                 }}
               >
