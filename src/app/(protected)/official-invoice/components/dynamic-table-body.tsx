@@ -8,39 +8,13 @@ import {
 import React, { useState } from "react";
 import ModalForOperationsOnInvoices from "./modal-for-edit-invoice";
 import ModalForDownloadInvoice from "./modal-for-download-invoice";
+import { Invoice } from "@/shared/utils/types";
 
 type DynamicTableBodyProps = {
   showLastColumn: boolean;
+  invoices: Invoice[];
 };
-export default function DynamicTableBody({
-  showLastColumn,
-}: DynamicTableBodyProps) {
-  const officialInvoice = [
-    {
-      id: 1,
-      code: "1",
-      plan: "نوع پلن",
-      email: "ایمیل",
-      mobile: "شماره موبایل",
-      invoiceNum: "۰۱۱۴",
-      company: "نقش اول کیفیت ",
-      date: "تاریخ صدور",
-      invoiceType: "دستی",
-      totalPrice: "مبلغ کل ریال",
-    },
-    {
-      id: 2,
-      code: "2",
-      plan: "نوع پلن",
-      email: "ایمیل",
-      mobile: "شماره موبایل",
-      invoiceNum: "۰۱۱۵",
-      company: "اپل",
-      date: "تاریخ صدور",
-      invoiceType: "آنلاین",
-      totalPrice: "مبلغ کل ریال",
-    },
-  ];
+export default function DynamicTableBody({ showLastColumn, invoices }: DynamicTableBodyProps) {
   const [isModalForEditOpen, setIsModalForEditOpen] = useState(false);
   const [isModalForDownloadOpen, setIsModalForDownLoadOpen] = useState(false);
   const [companyName, setCompayName] = useState("");
@@ -49,38 +23,38 @@ export default function DynamicTableBody({
   return (
     <>
       <Table.Tbody>
-        {officialInvoice.map((item) => (
+        {invoices?.map((item) => (
           <Table.Tr key={item.id} style={{ color: "#667085" }}>
             <Table.Td>
-              <Center>{item.code}</Center>
+              <Center>{item.id}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.plan}</Center>
+              <Center>{item.plan?.name}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.email}</Center>
+              <Center>{item.client?.user?.email}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.mobile}</Center>
+              <Center>{item.client?.user?.mobile}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.invoiceNum}</Center>
+              <Center>{item.invoice_number}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.company}</Center>
+              <Center>{item.client?.user?.company}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.date}</Center>
+              <Center>{item.from_date}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.invoiceType}</Center>
+              <Center>{item.status}</Center>
             </Table.Td>
             <Table.Td>
-              <Center>{item.totalPrice}</Center>
+              <Center>{item.final_price}</Center>
             </Table.Td>
             {showLastColumn && (
               <Table.Td>
-                {item.invoiceType === "دستی" ? (
+                {item.status === "دستی" ? (
                   <Center>
                     {" "}
                     <Group>
@@ -93,8 +67,8 @@ export default function DynamicTableBody({
                         <UnstyledButton
                           onClick={() => {
                             setIsModalForDownLoadOpen(true);
-                            setCompayName(item.company);
-                            setInvoiceNumber(item.invoiceNum);
+                            setCompayName(item.client.user.company);
+                            setInvoiceNumber(item.invoice_number);
                           }}
                         >
                           <IconDownload size={20} />
@@ -104,7 +78,7 @@ export default function DynamicTableBody({
                         <UnstyledButton
                           onClick={() => {
                             setIsModalForEditOpen(true);
-                            setCompayName(item.company);
+                            setCompayName(item.client.user.company);
                             setModalText("ویرایش");
                           }}
                         >
@@ -115,7 +89,7 @@ export default function DynamicTableBody({
                         <UnstyledButton
                           onClick={() => {
                             setIsModalForEditOpen(true);
-                            setCompayName(item.company);
+                            setCompayName(item.client.user.company);
                             setModalText("ابطال");
                           }}
                         >

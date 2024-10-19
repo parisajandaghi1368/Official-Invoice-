@@ -160,3 +160,25 @@ interface User {
   action_areas: any[];
   action_time: any[];
 }
+export interface Plans {
+  class: number;
+  cost_per_day: number;
+  cost_per_month: number;
+  cost_per_year: CostPerYear;
+  created_at: string;
+  description: string;
+  details: Details;
+  id: number;
+  is_disabled: boolean;
+  item_order: number;
+  max_projects_count: number;
+  name: string;
+  request_per_day: number;
+  scope: any;
+  updated_at: string;
+  _count: number;
+}
+interface CostPerYear {
+  en: number;
+  fa: string;
+}

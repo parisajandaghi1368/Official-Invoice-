@@ -18,8 +18,6 @@ import { z } from "zod";
 import newClass from "../style/calender.module.css";
 import { zodResolver } from "mantine-form-zod-resolver";
 import CustomCalendar from "@/app/(protected)/(invoice-exportation)/components/custom-calender";
-import useOfficialInvoices from "@/app/(protected)/official-invoice/hooks/use-official-invoice";
-import { Invoice } from "@/shared/utils/types";
 
 interface ModalProps {
   opened: boolean;
@@ -27,7 +25,6 @@ interface ModalProps {
 }
 
 export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
-  const { invoices, isLoading, error } = useOfficialInvoices();
   const filterForm = useForm<z.infer<typeof filterInvoiceValidationSchema>>({
     initialValues: {
       fromDate: "",
@@ -47,14 +44,6 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
   const [radioValue, setRadioValue] = useState("all invoice");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  const [email, setEmail] = useState<string[]>([]);
-
-  const userName = invoices
-    ?.map((item: Invoice) => item.client?.user?.username)
-    .filter((username: string) => username !== undefined);
-  const emailData = userName?.filter(
-    (email: string, index: string) => userName.indexOf(email) === index
-  );
 
   return (
     <Modal size={"80%"} opened={opened} onClose={onClose}>
@@ -151,7 +140,7 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
             label="نوع پلن"
             maxValues={2}
             {...filterForm.getInputProps("plan")}
-            data={["React", "Angular", "Vue", "Svelte"]}
+            data={[]}
             searchable
             withScrollArea={false}
             styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
@@ -175,12 +164,10 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
             label="ایمیل"
             maxValues={2}
             {...filterForm.getInputProps("email")}
-            data={emailData}
-            value={email}
+            data={[]}
             searchable
             withScrollArea={false}
             styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-            onChange={(newValue: string[]) => setEmail(newValue)}
           />
         </Grid.Col>
         <Grid.Col span={4}>
@@ -188,7 +175,7 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
             label="شماره موبایل"
             maxValues={2}
             {...filterForm.getInputProps("mobile")}
-            data={["React", "Angular", "Vue", "Svelte"]}
+            data={[]}
             searchable
             withScrollArea={false}
             styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
@@ -214,13 +201,7 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
         >
           پاک کردن
         </Button>
-        <Button
-          onClick={() => {
-            console.log({ value: email });
-          }}
-        >
-          تایید
-        </Button>
+        <Button>تایید</Button>
       </Group>
     </Modal>
   );
