@@ -19,6 +19,8 @@ import newClass from "../style/calender.module.css";
 import { zodResolver } from "mantine-form-zod-resolver";
 import CustomCalendar from "@/app/(protected)/(invoice-exportation)/components/custom-calender";
 
+import EmailMobileAutoComplete from "./email-mobile-auto-complete";
+
 interface ModalProps {
   opened: boolean;
   onClose: () => void;
@@ -159,28 +161,10 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
         </Grid.Col>
       </Grid>
       <Grid p={"md"}>
-        <Grid.Col span={4}>
-          <MultiSelect
-            label="ایمیل"
-            maxValues={2}
-            {...filterForm.getInputProps("email")}
-            data={[]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <MultiSelect
-            label="شماره موبایل"
-            maxValues={2}
-            {...filterForm.getInputProps("mobile")}
-            data={[]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          />
-        </Grid.Col>
+        <EmailMobileAutoComplete
+          emailProp={filterForm.getInputProps("email")}
+          mobileProp={filterForm.getInputProps("mobile")}
+        />
         <Grid.Col span={4}>
           <Radio.Group value={radioValue} onChange={setRadioValue}>
             <Flex justify="flex-start" align="center" gap={"xl"} mt={"xl"}>

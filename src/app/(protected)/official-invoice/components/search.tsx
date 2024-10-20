@@ -6,6 +6,7 @@ import ModalForInvoiceExportation from "../../(invoice-exportation)/components/m
 import SearchInput from "@/shared/search-part/search";
 type SearchProps = {
   isInHomePage: boolean;
+  isValidating: boolean;
 };
 export default function Search({ isInHomePage }: SearchProps) {
   const [isExportationModalOpen, setIsExportationModalOpen] = useState(false);

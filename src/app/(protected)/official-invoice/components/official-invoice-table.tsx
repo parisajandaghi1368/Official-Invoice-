@@ -1,6 +1,6 @@
 "use client";
 
-import { Pagination, Stack, Table } from "@mantine/core";
+import { Pagination, Stack, Table, rem } from "@mantine/core";
 import React from "react";
 import { OfficialInvoiceColumns } from "./official-invoice-data";
 import DynamicTableHeader from "./dynamic-table-header";
@@ -13,6 +13,7 @@ type OfficialInvoiceTable = {
   showLastColumn: boolean;
   invoices: Invoice[];
   totalPages: number;
+  mutate: () => void;
 };
 export default function OfficialInvoiceTable({
   showLastColumn = true,
@@ -20,11 +21,11 @@ export default function OfficialInvoiceTable({
   totalPages,
 }: OfficialInvoiceTable) {
   const [pageIndex, setPageIndex] = useAtom(pageIndexAtom);
-  const handlePage = (event: any) => {
-    setPageIndex(event);
+  const handlePage = (newPageIndex: number) => {
+    setPageIndex(newPageIndex);
   };
   return (
-    <Stack w={"100%"} align="center">
+    <Stack w={"100%"} align="center" gap={rem(50)}>
       <Table
         borderColor="#D0D5DD"
         withTableBorder
