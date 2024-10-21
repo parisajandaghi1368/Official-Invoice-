@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import useToken from "@/shared/hooks/use-token";
 import { useRouter } from "next/navigation";
-import useUser from "@/shared/hooks/use-user";
+import useMyself from "@/shared/hooks/use-myself";
 import useLogout from "@/shared/hooks/use-logout";
 import PageLoader from "@/shared/utils/page-loader";
 export default function ProtectedPageWrapper({
@@ -13,7 +13,7 @@ export default function ProtectedPageWrapper({
   const router = useRouter();
   const { token, checkedForTokenInStorage } = useToken();
   const logout = useLogout();
-  const { error: userError, user } = useUser();
+  const { error: userError, user } = useMyself();
 
   useEffect(() => {
     (async () => {

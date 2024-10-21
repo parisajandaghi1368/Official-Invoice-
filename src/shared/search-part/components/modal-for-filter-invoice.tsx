@@ -20,6 +20,8 @@ import { zodResolver } from "mantine-form-zod-resolver";
 import CustomCalendar from "@/app/(protected)/(invoice-exportation)/components/custom-calender";
 
 import EmailMobileAutoComplete from "./email-mobile-auto-complete";
+import InvoiceNumCompanyPlanAutoComplete from "./invoicenum-company-plan-auto-complete";
+import PriceProjectCodeAutoComplete from "./price-projectcode-auto-complete";
 
 interface ModalProps {
   opened: boolean;
@@ -66,99 +68,18 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
             className={newClass["to-date"]}
           />
         </Grid.Col>
-        <Grid.Col span={2}>
-          <MultiSelect
-            label="از قیمت"
-            searchable
-            maxValues={1}
-            leftSectionWidth={"30%"}
-            leftSection={
-              <Text fz={"xs"} mr={"5px"}>
-                ریال
-              </Text>
-            }
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-            data={["1000", "2000", "20000", "40000"]}
-            {...filterForm.getInputProps("fromPrice")}
-          />
-        </Grid.Col>
-        <Grid.Col span={2}>
-          <MultiSelect
-            label="تا قیمت"
-            maxValues={1}
-            data={[
-              "1000",
-              "2000",
-              "20000",
-              "40000",
-              "10",
-              "20",
-              "20900",
-              "40800",
-              "76000",
-              "54000",
-              "23000",
-              "40230",
-            ]}
-            leftSectionWidth={"30%"}
-            leftSection={
-              <Text fz={"xs"} mr={"5px"}>
-                ریال
-              </Text>
-            }
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-            {...filterForm.getInputProps("toPrice")}
-          />
-        </Grid.Col>
-
-        <Grid.Col span={4}>
-          <MultiSelect
-            label={"کد پروژه"}
-            maxValues={2}
-            {...filterForm.getInputProps("projectCode")}
-            data={["React", "Angular", "Vue", "Svelte"]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          />
-        </Grid.Col>
+        <PriceProjectCodeAutoComplete
+          fromPriceProp={filterForm.getInputProps("fromPrice")}
+          toPriceProp={filterForm.getInputProps("toPrice")}
+          projectCodeProp={filterForm.getInputProps("projectCode")}
+        />
       </Grid>
       <Grid p={"md"}>
-        <Grid.Col span={4}>
-          <MultiSelect
-            label="شماره فاکتور رسمی"
-            maxValues={2}
-            {...filterForm.getInputProps("officialInvoiceNumber")}
-            data={["React", "Angular", "Vue", "Svelte"]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <MultiSelect
-            label="نوع پلن"
-            maxValues={2}
-            {...filterForm.getInputProps("plan")}
-            data={[]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <MultiSelect
-            label="نام سازمان"
-            maxValues={2}
-            {...filterForm.getInputProps("company")}
-            data={["React", "Angular", "Vue", "Svelte"]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          />
-        </Grid.Col>
+        <InvoiceNumCompanyPlanAutoComplete
+          invoiceNumProp={filterForm.getInputProps("officialInvoiceNumber")}
+          companyNameProp={filterForm.getInputProps("company")}
+          planNameProp={filterForm.getInputProps("plan")}
+        />
       </Grid>
       <Grid p={"md"}>
         <EmailMobileAutoComplete

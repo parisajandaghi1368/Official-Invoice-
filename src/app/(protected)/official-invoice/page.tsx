@@ -4,11 +4,11 @@ import React from "react";
 import Search from "./components/search";
 import InvoiceHistory from "../(invoice-history)/components/invoice-history";
 import OfficialInvoiceTable from "./components/official-invoice-table";
-import useOfficialInvoices from "./hooks/use-official-invoice";
+import useTableOfficialInvoices from "./hooks/use-table-official-invoice";
 
 export default function OfficialInvoicePage() {
   const { invoices, isLoading, isValidating, totalPage, mutate } =
-    useOfficialInvoices();
+    useTableOfficialInvoices();
   const totalPages = Math.floor(totalPage / 10);
   return (
     <Stack p={"xl"} gap={rem(50)} justify="center" align="center">

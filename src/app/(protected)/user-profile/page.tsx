@@ -13,7 +13,7 @@ import React, { ChangeEvent, useState } from "react";
 import ModalForChangingPassword from "./components/modal-for-changing-password";
 import classes from "./style/style.module.css";
 import { useForm } from "@mantine/form";
-import useUser from "@/shared/hooks/use-user";
+import useMyself from "@/shared/hooks/use-myself";
 import useToken from "@/shared/hooks/use-token";
 import axios from "axios";
 import { urls } from "@/shared/config/urls";
@@ -23,7 +23,7 @@ import { zodResolver } from "mantine-form-zod-resolver";
 import { z } from "zod";
 import { userProfileValidationSchema } from "./tools/schema";
 export default function UserProfile() {
-  const { user } = useUser();
+  const { user } = useMyself();
   const { token: userToken } = useToken();
   const [isChangingPasswordModalOpen, setIsChangingPasswordModalOpen] =
     useState(false);

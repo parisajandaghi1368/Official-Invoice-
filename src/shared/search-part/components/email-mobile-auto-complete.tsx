@@ -1,8 +1,9 @@
 import { Grid, MultiSelectProps } from "@mantine/core";
 import React, { useMemo } from "react";
 import AsyncMultiSelect from "./async-multi-select";
-import useOfficialInvoices from "@/app/(protected)/official-invoice/hooks/use-official-invoice";
 import { Invoice } from "@/shared/utils/types";
+
+import useInvoices from "@/app/(protected)/official-invoice/hooks/use-invoices";
 interface EmailMobileAutoCompleteProps {
   emailProp: MultiSelectProps;
   mobileProp: MultiSelectProps;
@@ -11,19 +12,28 @@ export default function EmailMobileAutoComplete({
   emailProp,
   mobileProp,
 }: EmailMobileAutoCompleteProps) {
-  const { invoices } = useOfficialInvoices();
+  const { invoices, isLoading } = useInvoices();
+  const emails = useMemo(() => {
+    const filteredEmails = invoices
+      ?.map((item: Invoice) => item.client?.user?.email)
+      .filter((email: string) => email !== undefined);
+    console.log("filteredEmails", filteredEmails);
 
-  const filteredEmails = invoices
-    .map((item: Invoice) => item.client?.user?.email)
-    .filter((email: string) => email !== undefined);
+    return filteredEmails?.filter(
+      (email: string, index: number) => filteredEmails.indexOf(email) === index
+    );
+  }, [invoices]);
 
-  const emails = filteredEmails.filter(
-    (email: string, index: number) => filteredEmails.indexOf(email) === index
-  );
+  const mobiles = useMemo(() => {
+    const filteredEmails = invoices
+      ?.map((item: Invoice) => item.client?.user?.mobile)
+      .filter((mobile: string) => mobile !== undefined);
+    return filteredEmails?.filter(
+      (mobile: string, index: number) =>
+        filteredEmails.indexOf(mobile) === index
+    );
+  }, [invoices]);
 
-  console.log("emails", emails);
-
-  // const emails=invoices.filter((item:string)=>{item.email})
   return (
     <>
       <Grid.Col span={4}>
@@ -31,19 +41,16 @@ export default function EmailMobileAutoComplete({
           label={"ایمیل"}
           inputProps={emailProp}
           data={emails}
+          isLoading={isLoading}
         />
       </Grid.Col>
       <Grid.Col span={4}>
-        {/* <AsyncMultiSelect label={"شماره موبایل"} inputProps={mobileProp} /> */}
-        {/* <MultiSelect
-            label="شماره موبایل"
-            maxValues={2}
-            {...filterForm.getInputProps("mobile")}
-            data={[]}
-            searchable
-            withScrollArea={false}
-            styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-          /> */}
+        <AsyncMultiSelect
+          label={"شماره موبایل"}
+          inputProps={mobileProp}
+          data={mobiles}
+          isLoading={isLoading}
+        />
       </Grid.Col>
     </>
   );

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import useSWR from "swr";
 
-import useToken from "../hooks/use-token";
+import useToken from "./use-token";
 import { MySelf } from "../utils/types";
 import { getCommonHeaders } from "../utils/fetch-helpers";
 import { urls } from "../config/urls";
@@ -11,7 +11,7 @@ function userFetcher([url, token]: [url: string, token: string]) {
   return axios.get(url, { headers }).then((res) => res.data as MySelf);
 }
 
-const useUser = () => {
+const useMyself = () => {
   const { token } = useToken();
 
   const { data, error, isLoading, mutate } = useSWR(
@@ -27,4 +27,4 @@ const useUser = () => {
   };
 };
 
-export default useUser;
+export default useMyself;

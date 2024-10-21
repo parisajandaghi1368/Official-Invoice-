@@ -15,7 +15,7 @@ import { changePasswordValidationSchema } from "../tools/schema";
 import useToken from "@/shared/hooks/use-token";
 import axios from "axios";
 import { urls } from "@/shared/config/urls";
-import useUser from "@/shared/hooks/use-user";
+import useMyself from "@/shared/hooks/use-myself";
 import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
 import { notifications } from "@mantine/notifications";
 import ChangingPasswordInput from "./changing-password-input";
@@ -30,7 +30,7 @@ export default function ModalForChangingPassword({
   opened,
 }: ModalForChangingPasswordProps) {
   const { token: userToken } = useToken();
-  const { user } = useUser();
+  const { user } = useMyself();
 
   const form = useForm<z.infer<typeof changePasswordValidationSchema>>({
     initialValues: {
