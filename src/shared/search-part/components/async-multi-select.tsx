@@ -8,6 +8,8 @@ interface AsyncMultiSelectProps {
   data: [];
   isLoading: boolean;
   leftSection?: React.ReactNode;
+  searchTerm: string[];
+  setSearchTerm: (term: string[]) => void;
 }
 export default function AsyncMultiSelect({
   label,
@@ -15,11 +17,14 @@ export default function AsyncMultiSelect({
   data,
   isLoading,
   leftSection,
+  searchTerm,
+  setSearchTerm,
 }: AsyncMultiSelectProps) {
   return (
     <MultiSelect
       label={label}
       data={data}
+      value={searchTerm}
       searchable
       withScrollArea={false}
       leftSectionWidth={leftSection ? "30%" : undefined}
@@ -28,6 +33,9 @@ export default function AsyncMultiSelect({
       maxValues={2}
       {...inputProps}
       styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
+      onChange={(event: string[]) => {
+        setSearchTerm(event);
+      }}
     />
   );
 }

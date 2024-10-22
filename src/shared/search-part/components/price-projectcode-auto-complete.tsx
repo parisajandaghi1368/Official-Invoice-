@@ -1,16 +1,16 @@
 import { Grid, MultiSelectProps, Text } from "@mantine/core";
 import React from "react";
 import AsyncMultiSelect from "./async-multi-select";
-interface PriceProjectCodeAutoComplete {
+interface AutoCompleteProps {
   fromPriceProp: MultiSelectProps;
   toPriceProp: MultiSelectProps;
   projectCodeProp: MultiSelectProps;
 }
-export default function PriceProjectCodeAutoComplete({
+export default function PriceAndProjectCodeAutoComplete({
   fromPriceProp,
   toPriceProp,
   projectCodeProp,
-}: PriceProjectCodeAutoComplete) {
+}: AutoCompleteProps) {
   return (
     <>
       <Grid.Col span={2}>

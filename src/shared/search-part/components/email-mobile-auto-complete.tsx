@@ -1,38 +1,22 @@
 import { Grid, MultiSelectProps } from "@mantine/core";
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import AsyncMultiSelect from "./async-multi-select";
-import { Invoice } from "@/shared/utils/types";
+import { useEmails } from "@/shared/hooks/use-emails";
+import { useMobiles } from "@/shared/hooks/use-mobiles";
 
-import useInvoices from "@/app/(protected)/official-invoice/hooks/use-invoices";
-interface EmailMobileAutoCompleteProps {
+interface AutoCompleteprops {
   emailProp: MultiSelectProps;
   mobileProp: MultiSelectProps;
 }
-export default function EmailMobileAutoComplete({
+export default function EmailAndMobileAutoComplete({
   emailProp,
   mobileProp,
-}: EmailMobileAutoCompleteProps) {
-  const { invoices, isLoading } = useInvoices();
-  const emails = useMemo(() => {
-    const filteredEmails = invoices
-      ?.map((item: Invoice) => item.client?.user?.email)
-      .filter((email: string) => email !== undefined);
-    console.log("filteredEmails", filteredEmails);
-
-    return filteredEmails?.filter(
-      (email: string, index: number) => filteredEmails.indexOf(email) === index
-    );
-  }, [invoices]);
-
-  const mobiles = useMemo(() => {
-    const filteredEmails = invoices
-      ?.map((item: Invoice) => item.client?.user?.mobile)
-      .filter((mobile: string) => mobile !== undefined);
-    return filteredEmails?.filter(
-      (mobile: string, index: number) =>
-        filteredEmails.indexOf(mobile) === index
-    );
-  }, [invoices]);
+}: AutoCompleteprops) {
+  const [searchEmail, setSearchEmail] = useState<string[]>([]);
+  const [searchMobile, setSearchMobile] = useState<string[]>([]);
+  const { emails, isLoading } = useEmails({ searchEmail });
+  const { mobiles } = useMobiles({ searchMobile });
+  console.log("emails", emails);
 
   return (
     <>
@@ -42,6 +26,8 @@ export default function EmailMobileAutoComplete({
           inputProps={emailProp}
           data={emails}
           isLoading={isLoading}
+          searchTerm={searchEmail}
+          setSearchTerm={setSearchEmail}
         />
       </Grid.Col>
       <Grid.Col span={4}>
@@ -50,6 +36,8 @@ export default function EmailMobileAutoComplete({
           inputProps={mobileProp}
           data={mobiles}
           isLoading={isLoading}
+          searchTerm={searchMobile}
+          setSearchTerm={setSearchMobile}
         />
       </Grid.Col>
     </>

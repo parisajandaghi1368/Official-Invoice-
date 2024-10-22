@@ -6,7 +6,7 @@ interface AutoCompleteProps {
   companyNameProp: MultiSelectProps;
   planNameProp: MultiSelectProps;
 }
-export default function InvoiceNumCompanyPlanAutoComplete({
+export default function InvoiceNumAndCompanyAutoComplete({
   invoiceNumProp,
   companyNameProp,
   planNameProp,

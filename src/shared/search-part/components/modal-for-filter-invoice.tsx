@@ -1,14 +1,5 @@
 "use client";
-import {
-  Button,
-  Flex,
-  Grid,
-  Group,
-  Modal,
-  Radio,
-  Text,
-  MultiSelect,
-} from "@mantine/core";
+import { Button, Flex, Grid, Group, Modal, Radio } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
 import { useState } from "react";
@@ -19,9 +10,9 @@ import newClass from "../style/calender.module.css";
 import { zodResolver } from "mantine-form-zod-resolver";
 import CustomCalendar from "@/app/(protected)/(invoice-exportation)/components/custom-calender";
 
-import EmailMobileAutoComplete from "./email-mobile-auto-complete";
-import InvoiceNumCompanyPlanAutoComplete from "./invoicenum-company-plan-auto-complete";
-import PriceProjectCodeAutoComplete from "./price-projectcode-auto-complete";
+import EmailAndMobileAutoComplete from "./email-mobile-auto-complete";
+import InvoiceNumAndCompanyAutoComplete from "./invoicenum-company-plan-auto-complete";
+import PriceAndProjectCodeAutoComplete from "./price-projectcode-auto-complete";
 
 interface ModalProps {
   opened: boolean;
@@ -68,21 +59,21 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
             className={newClass["to-date"]}
           />
         </Grid.Col>
-        <PriceProjectCodeAutoComplete
+        <PriceAndProjectCodeAutoComplete
           fromPriceProp={filterForm.getInputProps("fromPrice")}
           toPriceProp={filterForm.getInputProps("toPrice")}
           projectCodeProp={filterForm.getInputProps("projectCode")}
         />
       </Grid>
       <Grid p={"md"}>
-        <InvoiceNumCompanyPlanAutoComplete
+        <InvoiceNumAndCompanyAutoComplete
           invoiceNumProp={filterForm.getInputProps("officialInvoiceNumber")}
           companyNameProp={filterForm.getInputProps("company")}
           planNameProp={filterForm.getInputProps("plan")}
         />
       </Grid>
       <Grid p={"md"}>
-        <EmailMobileAutoComplete
+        <EmailAndMobileAutoComplete
           emailProp={filterForm.getInputProps("email")}
           mobileProp={filterForm.getInputProps("mobile")}
         />
