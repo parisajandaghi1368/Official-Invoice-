@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useToken from "@/shared/hooks/use-token";
 import useSWR from "swr";
 import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
@@ -7,6 +7,9 @@ import { AxiosError } from "axios";
 import useLogout from "@/shared/hooks/use-logout";
 
 import { urls } from "@/shared/config/urls";
+import { useDebouncedValue } from "@mantine/hooks";
+import qs from "qs";
+import { Invoice } from "../utils/types";
 
 const projectsFetcher = async ([url, token]: [string, string]) => {
   return axios
@@ -22,19 +25,24 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
       }
     });
 };
+interface UseInvoiceParam {
+  searchInvoiceNum: string;
+}
 
-const useInvoices = () => {
+const useInvoices = ({ searchInvoiceNum }: UseInvoiceParam) => {
   const { token } = useToken();
   const logout = useLogout();
+  const [debouncedSearch] = useDebouncedValue(searchInvoiceNum, 500);
 
+  const query = qs.stringify(
+    {
+      $top: 20,
+    },
+    { encode: true }
+  );
+  const url = `${urls.invoices}?${query}`;
   const { data, error, isLoading, mutate, isValidating } = useSWR(
-    token
-      ? [
-          `${urls.invoices}?$top=${30}
-          `,
-          token,
-        ]
-      : null,
+    token ? [url, token] : null,
     projectsFetcher
   );
   useEffect(() => {
@@ -43,14 +51,21 @@ const useInvoices = () => {
       logout();
     }
   }, [data, error, logout]);
+  const invoiceNumber = useMemo(() => {
+    const filteredInvoiceNumber = data?.data?.map(
+      (item: Invoice) => item.invoice_number ?? ""
+    );
+    return filteredInvoiceNumber?.filter(
+      (value: string, index: number) =>
+        value !== "" && filteredInvoiceNumber?.indexOf(value) === index
+    );
+  }, [data?.data]);
 
   return {
-    invoices: data?.data,
-    data: data,
+    invoiceNumber,
     error: error as AxiosError,
-    isLoading,
+    isLoadingInvoiceNum: isLoading,
     mutate,
-
     isValidating,
   };
 };

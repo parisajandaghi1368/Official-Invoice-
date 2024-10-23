@@ -20,18 +20,18 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
     });
 };
 
-interface UseMobilesParams {
-  searchMobile: string;
+interface UseCompanyParams {
+  searchCompany: string;
 }
-export function useMobiles({ searchMobile }: UseMobilesParams) {
+export function useCompanies({ searchCompany }: UseCompanyParams) {
   const { token } = useToken();
   const logout = useLogout();
-  const [debouncedSearch] = useDebouncedValue(searchMobile, 500);
+  const [debouncedSearch] = useDebouncedValue(searchCompany, 500);
 
   const query = qs.stringify(
     {
       $top: 20,
-      $filter: `substringof('${debouncedSearch}',mobile) eq true`,
+      $filter: `substringof('${debouncedSearch}',company) eq true`,
     },
     { encode: true }
   );
@@ -47,12 +47,17 @@ export function useMobiles({ searchMobile }: UseMobilesParams) {
       logout();
     }
   }, [data, error, logout]);
-  const mobiles = useMemo(() => {
-    return data?.value?.map((item: User) => item.mobile);
+  const companies = useMemo(() => {
+    const filteredCompany = data?.value?.map((item: User) => item.company);
+    return filteredCompany?.filter(
+      (value: string, index: number) =>
+        filteredCompany?.indexOf(value) === index
+    );
   }, [data?.value]);
+
   return {
     isLoading,
     mutate,
-    mobiles: mobiles,
+    companies,
   };
 }

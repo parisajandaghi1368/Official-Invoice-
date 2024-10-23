@@ -12,11 +12,13 @@ export default function EmailAndMobileAutoComplete({
   emailProp,
   mobileProp,
 }: AutoCompleteprops) {
-  const [searchEmail, setSearchEmail] = useState<string[]>([]);
-  const [searchMobile, setSearchMobile] = useState<string[]>([]);
+  const [searchEmail, setSearchEmail] = useState("");
+  const [searchMobile, setSearchMobile] = useState("");
+  const [selectedMobile, setSelectedMobile] = useState<string[]>([]);
+  const [selectedEmail, setSelectedEmail] = useState<string[]>([]);
+
   const { emails, isLoading } = useEmails({ searchEmail });
   const { mobiles } = useMobiles({ searchMobile });
-  console.log("emails", emails);
 
   return (
     <>
@@ -26,8 +28,10 @@ export default function EmailAndMobileAutoComplete({
           inputProps={emailProp}
           data={emails}
           isLoading={isLoading}
-          searchTerm={searchEmail}
-          setSearchTerm={setSearchEmail}
+          selectedItem={selectedEmail}
+          setSelectedItem={setSelectedEmail}
+          searchItem={searchEmail}
+          setSearchItem={setSearchEmail}
         />
       </Grid.Col>
       <Grid.Col span={4}>
@@ -36,8 +40,10 @@ export default function EmailAndMobileAutoComplete({
           inputProps={mobileProp}
           data={mobiles}
           isLoading={isLoading}
-          searchTerm={searchMobile}
-          setSearchTerm={setSearchMobile}
+          selectedItem={selectedMobile}
+          setSelectedItem={setSelectedMobile}
+          searchItem={searchMobile}
+          setSearchItem={setSearchMobile}
         />
       </Grid.Col>
     </>

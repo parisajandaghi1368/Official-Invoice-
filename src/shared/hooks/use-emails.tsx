@@ -21,7 +21,7 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
 };
 
 interface UseEmailsParams {
-  searchEmail: string[];
+  searchEmail: string;
 }
 export function useEmails({ searchEmail }: UseEmailsParams) {
   const { token } = useToken();

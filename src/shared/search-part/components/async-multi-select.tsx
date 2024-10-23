@@ -8,34 +8,41 @@ interface AsyncMultiSelectProps {
   data: [];
   isLoading: boolean;
   leftSection?: React.ReactNode;
-  searchTerm: string[];
-  setSearchTerm: (term: string[]) => void;
+  selectedItem: string[];
+  setSelectedItem: (selected: string[]) => void;
+  searchItem: string;
+  setSearchItem: (item: string) => void;
 }
+
 export default function AsyncMultiSelect({
   label,
   inputProps,
   data,
   isLoading,
   leftSection,
-  searchTerm,
-  setSearchTerm,
+  selectedItem,
+  setSelectedItem,
+  searchItem,
+  setSearchItem,
 }: AsyncMultiSelectProps) {
+  console.log("selectItem", selectedItem);
+
   return (
     <MultiSelect
       label={label}
       data={data}
-      value={searchTerm}
-      searchable
+      value={selectedItem}
       withScrollArea={false}
       leftSectionWidth={leftSection ? "30%" : undefined}
       rightSection={isLoading && <Loader size={18} />}
       leftSection={leftSection}
       maxValues={2}
+      searchValue={searchItem}
+      onSearchChange={setSearchItem}
+      searchable
+      onChange={setSelectedItem}
       {...inputProps}
       styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
-      onChange={(event: string[]) => {
-        setSearchTerm(event);
-      }}
     />
   );
 }

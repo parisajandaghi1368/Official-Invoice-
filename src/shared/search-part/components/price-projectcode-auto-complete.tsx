@@ -1,6 +1,7 @@
 import { Grid, MultiSelectProps, Text } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import AsyncMultiSelect from "./async-multi-select";
+import useProjectCode from "@/shared/hooks/use-project-code";
 interface AutoCompleteProps {
   fromPriceProp: MultiSelectProps;
   toPriceProp: MultiSelectProps;
@@ -11,6 +12,19 @@ export default function PriceAndProjectCodeAutoComplete({
   toPriceProp,
   projectCodeProp,
 }: AutoCompleteProps) {
+  const [searchFromPrice, setSearchFromPrice] = useState("");
+  const [searchToPrice, setSearchToPrice] = useState("");
+  const [searchProjectCode, setSearchProjectCode] = useState("");
+
+  const [selectedFromPrice, setSelectedFromPrice] = useState<string[]>([]);
+  const [selectedToPrice, setSelectedToPrice] = useState<string[]>([]);
+  const [selectedProjectCode, setSelectedProjectCode] = useState<string[]>([]);
+
+  const { projectCode, isLoadingProjectCode } = useProjectCode({
+    searchProjectCode,
+  });
+  console.log("projectCode", projectCode);
+
   return (
     <>
       <Grid.Col span={2}>
@@ -43,9 +57,13 @@ export default function PriceAndProjectCodeAutoComplete({
       <Grid.Col span={4}>
         <AsyncMultiSelect
           label={"کد پروژه"}
-          data={[]}
-          isLoading={true}
+          data={projectCode}
+          isLoading={isLoadingProjectCode}
           inputProps={projectCodeProp}
+          searchItem={searchProjectCode}
+          setSearchItem={setSearchProjectCode}
+          selectedItem={selectedProjectCode}
+          setSelectedItem={setSelectedProjectCode}
         />
       </Grid.Col>
     </>
