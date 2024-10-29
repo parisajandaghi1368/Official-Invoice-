@@ -72,9 +72,9 @@ export default function ModalForChangingPassword({
       });
     }
   }
-  useEffect(() => {
-    if (!opened) form.reset();
-  }, [form, opened]);
+  // useEffect(() => {
+  //   if (!opened) form.reset();
+  // }, [form, opened]);
   return (
     <Modal onClose={onClose} opened={opened} size={"xl"}>
       <Stack gap="lg">

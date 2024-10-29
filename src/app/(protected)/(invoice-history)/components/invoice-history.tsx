@@ -1,24 +1,27 @@
 "use client";
-import { ActionIcon, Group, Tooltip } from "@mantine/core";
+import { ActionIcon, Group, Loader, Tooltip } from "@mantine/core";
 import { IconFileX, IconHistory } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+
+import { useState } from "react";
 import InvoicesHistoryDrawer from "./invoices-history-drawer";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function InvoiceHistory() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   return (
     <>
       <Group>
         <Tooltip label="فاکتور‌های ابطالی">
           <ActionIcon
             onClick={() => {
+              setIsLoading(true);
               router.push("/cancellation-invoices");
             }}
           >
-            <IconFileX size={20} />
+            {isLoading ? <Loader size={18} /> : <IconFileX size={20} />}
           </ActionIcon>
         </Tooltip>
         <Tooltip label="تاریخچه">

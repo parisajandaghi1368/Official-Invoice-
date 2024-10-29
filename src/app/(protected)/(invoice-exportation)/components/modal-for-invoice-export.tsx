@@ -18,7 +18,7 @@ import { useForm } from "@mantine/form";
 import newClass from "../style/calender.module.css";
 import z from "zod";
 import { exportationFormValidationSchema } from "../tools/schema";
-import CustomCalendar from "./custom-calender";
+import CustomCalendar, { DateFormatter } from "./custom-calender";
 import { useEffect, useState } from "react";
 import { notifications } from "@mantine/notifications";
 
@@ -35,8 +35,8 @@ export default function ModalForInvoiceExportation({
   const [isInputDisabled, setIsInputDisabled] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  const today = new Date();
   useEffect(() => {
+    const today = new Date();
     const validDate = date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
 
     if (validDate) {
@@ -48,7 +48,8 @@ export default function ModalForInvoiceExportation({
       setDate(today);
     }
   }, [date]);
-  // const formattedDate = DateFormatter(date);
+  const formattedDate = DateFormatter(date);
+  console.log("formattedDate", formattedDate);
 
   const invoiceExportationForm = useForm<
     z.infer<typeof exportationFormValidationSchema>
@@ -82,12 +83,12 @@ export default function ModalForInvoiceExportation({
     setConfirm(true);
     console.log("dfsdf");
   };
-  useEffect(() => {
-    if (!opened) {
-      invoiceExportationForm.reset();
-      setConfirm(false);
-    }
-  }, [invoiceExportationForm, opened]);
+  // useEffect(() => {
+  //   if (!opened) {
+  //     invoiceExportationForm.reset();
+  //     setConfirm(false);
+  //   }
+  // }, [invoiceExportationForm, opened]);
   return (
     <>
       <Modal

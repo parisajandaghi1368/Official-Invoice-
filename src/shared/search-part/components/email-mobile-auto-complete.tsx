@@ -17,8 +17,8 @@ export default function EmailAndMobileAutoComplete({
   const [selectedMobile, setSelectedMobile] = useState<string[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<string[]>([]);
 
-  const { emails, isLoading } = useEmails({ searchEmail });
-  const { mobiles } = useMobiles({ searchMobile });
+  const { emails, emailLoading } = useEmails({ searchEmail });
+  const { mobiles, mobileLoading } = useMobiles({ searchMobile });
 
   return (
     <>
@@ -27,11 +27,12 @@ export default function EmailAndMobileAutoComplete({
           label={"ایمیل"}
           inputProps={emailProp}
           data={emails}
-          isLoading={isLoading}
+          isLoading={emailLoading}
           selectedItem={selectedEmail}
           setSelectedItem={setSelectedEmail}
           searchItem={searchEmail}
           setSearchItem={setSearchEmail}
+          maxValue={2}
         />
       </Grid.Col>
       <Grid.Col span={4}>
@@ -39,11 +40,12 @@ export default function EmailAndMobileAutoComplete({
           label={"شماره موبایل"}
           inputProps={mobileProp}
           data={mobiles}
-          isLoading={isLoading}
+          isLoading={mobileLoading}
           selectedItem={selectedMobile}
           setSelectedItem={setSelectedMobile}
           searchItem={searchMobile}
           setSearchItem={setSearchMobile}
+          maxValue={2}
         />
       </Grid.Col>
     </>

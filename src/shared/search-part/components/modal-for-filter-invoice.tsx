@@ -2,7 +2,7 @@
 import { Button, Flex, Grid, Group, Modal, Radio } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { filterInvoiceValidationSchema } from "../tools/schema";
 import { z } from "zod";
 
@@ -13,6 +13,8 @@ import CustomCalendar from "@/app/(protected)/(invoice-exportation)/components/c
 import EmailAndMobileAutoComplete from "./email-mobile-auto-complete";
 import InvoiceNumAndCompanyAutoComplete from "./invoicenum-company-plan-auto-complete";
 import PriceAndProjectCodeAutoComplete from "./price-projectcode-auto-complete";
+import { notifications } from "@mantine/notifications";
+import { DateConvertor } from "@/app/(protected)/(invoice-exportation)/tools/converter-functions";
 
 interface ModalProps {
   opened: boolean;
@@ -39,6 +41,45 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
   const [radioValue, setRadioValue] = useState("all invoice");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
+
+  useEffect(() => {
+    const today = new Date();
+    const validToDate =
+      toDate.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
+
+    if (validToDate) {
+      notifications.show({
+        id: "validDateInEdit",
+        message: "امکان انتخاب تاریخ در گذشته وجود ندارد!",
+        color: "yellow",
+      });
+      setToDate(today);
+    }
+    const validFromDate =
+      fromDate.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
+    if (validFromDate) {
+      notifications.show({
+        id: "validDateInEdit",
+        message: "امکان انتخاب تاریخ در گذشته وجود ندارد!",
+        color: "yellow",
+      });
+      setFromDate(today);
+    }
+  }, [fromDate, toDate]);
+
+  const filterModalInfo = {
+    fromDate: DateConvertor(fromDate),
+    toDate: DateConvertor(toDate),
+    company: filterForm.values.company,
+    email: filterForm.values.email,
+    fromPrice: filterForm.values.fromPrice,
+    mobile: filterForm.values.mobile,
+    officialInvoiceNumber: filterForm.values.officialInvoiceNumber,
+    plan: filterForm.values.plan,
+    projectCode: filterForm.values.projectCode,
+    toPrice: filterForm.values.toPrice,
+    valueOfRadio: radioValue,
+  };
 
   return (
     <Modal size={"80%"} opened={opened} onClose={onClose}>
@@ -97,7 +138,15 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
         >
           پاک کردن
         </Button>
-        <Button>تایید</Button>
+        <Button
+          onClick={() => {
+            console.log("filterModalInfo", filterModalInfo);
+            filterForm.reset();
+            onClose();
+          }}
+        >
+          تایید
+        </Button>
       </Group>
     </Modal>
   );

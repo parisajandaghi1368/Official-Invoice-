@@ -53,7 +53,7 @@ const usePlans = ({ searchPlan }: UsePlansParams) => {
     plans,
     data: data,
     error: error as AxiosError,
-    loading: isLoading,
+    planLoading: isLoading,
     mutate,
   };
 };

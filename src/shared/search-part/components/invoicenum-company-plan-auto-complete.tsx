@@ -2,7 +2,7 @@ import { Grid, MultiSelectProps } from "@mantine/core";
 import React, { useState } from "react";
 import AsyncMultiSelect from "./async-multi-select";
 import { useCompanies } from "@/shared/hooks/use-companies";
-import useInvoices from "@/shared/hooks/use-invoices";
+import useInvoiceNumbers from "@/shared/hooks/use-invoice-num";
 import usePlans from "@/shared/hooks/use-plan";
 interface AutoCompleteProps {
   invoiceNumProp: MultiSelectProps;
@@ -22,12 +22,12 @@ export default function InvoiceNumAndCompanyAutoComplete({
   const [selectedInvoiceNum, setSelectedInvoiceNum] = useState<string[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<string[]>([]);
 
-  const { companies, isLoading } = useCompanies({ searchCompany });
-  const { plans, loading } = usePlans({ searchPlan });
-  const { invoiceNumber, isLoadingInvoiceNum } = useInvoices({
+  const { companies, companyLoading } = useCompanies({ searchCompany });
+  const { plans, planLoading } = usePlans({ searchPlan });
+  const { invoiceNumbers, invoiceNumLoading } = useInvoiceNumbers({
     searchInvoiceNum,
   });
-  console.log("invoiceNumber", invoiceNumber);
+  console.log("invoiceNumber", invoiceNumbers);
 
   return (
     <>
@@ -35,8 +35,9 @@ export default function InvoiceNumAndCompanyAutoComplete({
         <AsyncMultiSelect
           label="شماره فاکتور رسمی"
           inputProps={invoiceNumProp}
-          data={invoiceNumber}
-          isLoading={isLoadingInvoiceNum}
+          data={invoiceNumbers}
+          isLoading={invoiceNumLoading}
+          maxValue={2}
           searchItem={searchInvoiceNum}
           setSearchItem={setSearchInvoiceNum}
           selectedItem={selectedInvoiceNum}
@@ -48,8 +49,9 @@ export default function InvoiceNumAndCompanyAutoComplete({
           label="نوع پلن"
           inputProps={companyNameProp}
           data={plans}
-          isLoading={loading}
+          isLoading={planLoading}
           searchItem={searchPlan}
+          maxValue={2}
           setSearchItem={setSearchPlan}
           selectedItem={selectedPlan}
           setSelectedItem={setSelectedPlan}
@@ -60,7 +62,8 @@ export default function InvoiceNumAndCompanyAutoComplete({
           label="نام سازمان"
           inputProps={planNameProp}
           data={companies}
-          isLoading={isLoading}
+          isLoading={companyLoading}
+          maxValue={2}
           selectedItem={selectedCompany}
           setSelectedItem={setSelectedCompany}
           searchItem={searchCompany}

@@ -6,12 +6,13 @@ interface AsyncMultiSelectProps {
   label: string;
   inputProps: MultiSelectProps;
   data: [];
-  isLoading: boolean;
+  isLoading?: boolean;
   leftSection?: React.ReactNode;
   selectedItem: string[];
   setSelectedItem: (selected: string[]) => void;
-  searchItem: string;
-  setSearchItem: (item: string) => void;
+  searchItem?: string;
+  setSearchItem?: (item: string) => void;
+  maxValue: number;
 }
 
 export default function AsyncMultiSelect({
@@ -24,9 +25,8 @@ export default function AsyncMultiSelect({
   setSelectedItem,
   searchItem,
   setSearchItem,
+  maxValue,
 }: AsyncMultiSelectProps) {
-  console.log("selectItem", selectedItem);
-
   return (
     <MultiSelect
       label={label}
@@ -36,11 +36,15 @@ export default function AsyncMultiSelect({
       leftSectionWidth={leftSection ? "30%" : undefined}
       rightSection={isLoading && <Loader size={18} />}
       leftSection={leftSection}
-      maxValues={2}
+      maxValues={maxValue}
       searchValue={searchItem}
       onSearchChange={setSearchItem}
       searchable
       onChange={setSelectedItem}
+      // nothingFoundMessage={
+      //   (data ?? []).length === 0 && "موردی برای نمایش یافت نشد!"
+      // }
+      defaultDropdownOpened={data?.length === 0 && false}
       {...inputProps}
       styles={{ dropdown: { maxHeight: 200, overflowY: "auto" } }}
     />

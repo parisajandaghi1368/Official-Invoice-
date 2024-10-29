@@ -40,3 +40,19 @@ export function replaceEnglishNumbers(inputString: string) {
   }
   return inputString;
 }
+
+export function DateConvertor(date: Date) {
+  let convertedDate = date.toLocaleDateString("fa-IR").split("/").join("-");
+
+  const parts = convertedDate.split("-");
+
+  if (parts[1].length === 1) {
+    parts[1] = "0" + parts[1];
+  }
+  if (parts[2].length === 1) {
+    parts[2] = "0" + parts[2];
+  }
+  convertedDate = parts.join("-");
+
+  return replacePersianNumbers(convertedDate);
+}

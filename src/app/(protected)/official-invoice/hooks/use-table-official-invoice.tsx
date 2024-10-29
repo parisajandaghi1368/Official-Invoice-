@@ -25,6 +25,10 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
     });
 };
 
+// function useAllInvoices({ query }) {
+//   return useSWR(`${url.invoices}${query ? `?${query}` : ""}`, fetcher);
+// }
+
 const useTableOfficialInvoices = () => {
   const pageIndex = useAtomValue(pageIndexAtom);
   const searchTerm = useDebouncedValue(useAtomValue(searchTermAtom), 500);
@@ -32,6 +36,13 @@ const useTableOfficialInvoices = () => {
   const logout = useLogout();
 
   const skip = pageIndex && (pageIndex - 1) * 10;
+
+  // const { data, error, isLoading, mutate, isValidating } = useAllInvoices({
+  //   query: qs({
+  //     $top: 10,
+  //     $skip: skip,
+  //   }),
+  // });
 
   const { data, error, isLoading, mutate, isValidating } = useSWR(
     token

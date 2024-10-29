@@ -14,7 +14,10 @@ type DynamicTableBodyProps = {
   showLastColumn: boolean;
   invoices: Invoice[];
 };
-export default function DynamicTableBody({ showLastColumn, invoices }: DynamicTableBodyProps) {
+export default function DynamicTableBody({
+  showLastColumn,
+  invoices,
+}: DynamicTableBodyProps) {
   const [isModalForEditOpen, setIsModalForEditOpen] = useState(false);
   const [isModalForDownloadOpen, setIsModalForDownLoadOpen] = useState(false);
   const [companyName, setCompayName] = useState("");
