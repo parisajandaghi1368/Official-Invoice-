@@ -1,7 +1,7 @@
-import { Grid, MultiSelectProps, Text } from "@mantine/core";
-import React, { useState } from "react";
-import AsyncMultiSelect from "./async-multi-select";
 import useProjectCode from "@/shared/hooks/use-project-code";
+import { Grid, MultiSelectProps, Text } from "@mantine/core";
+import { useState } from "react";
+import AsyncMultiSelect from "./async-multi-select";
 
 interface AutoCompleteProps {
   fromPriceProp: MultiSelectProps;

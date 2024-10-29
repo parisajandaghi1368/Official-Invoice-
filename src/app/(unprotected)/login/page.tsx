@@ -10,18 +10,18 @@ import {
   rem,
 } from "@mantine/core";
 
-import React, { ChangeEvent, useState } from "react";
-import classes from "../style/style.module.css";
-import { useRouter } from "next/navigation";
-import PasswordInput from "../(components)/password-input";
-import { useForm } from "@mantine/form";
-import axios from "axios";
 import { urls } from "@/shared/config/urls";
 import useToken from "@/shared/hooks/use-token";
-import { login } from "./auth";
-import { notifications } from "@mantine/notifications";
 import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
+import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import { IconRefresh } from "@tabler/icons-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useState } from "react";
+import PasswordInput from "../(components)/password-input";
+import classes from "../style/style.module.css";
+import { login } from "./auth";
 
 export default function Login() {
   const router = useRouter();

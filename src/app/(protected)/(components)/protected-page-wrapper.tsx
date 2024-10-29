@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect } from "react";
-import useToken from "@/shared/hooks/use-token";
-import { useRouter } from "next/navigation";
-import useMyself from "@/shared/hooks/use-myself";
 import useLogout from "@/shared/hooks/use-logout";
+import useMyself from "@/shared/hooks/use-myself";
+import useToken from "@/shared/hooks/use-token";
 import PageLoader from "@/shared/utils/page-loader";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 export default function ProtectedPageWrapper({
   children,
 }: {

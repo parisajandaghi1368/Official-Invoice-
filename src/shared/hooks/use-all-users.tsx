@@ -1,10 +1,9 @@
-import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
-import useToken from "@/shared/hooks/use-token";
-import axios from "axios";
 import useLogout from "@/shared/hooks/use-logout";
-import useSWR from "swr";
+import useToken from "@/shared/hooks/use-token";
+import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
+import axios, { AxiosError } from "axios";
 import { useEffect } from "react";
-import { AxiosError } from "axios";
+import useSWR from "swr";
 
 import { urls } from "@/shared/config/urls";
 

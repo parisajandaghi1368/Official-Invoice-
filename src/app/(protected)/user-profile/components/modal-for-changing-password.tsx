@@ -1,3 +1,7 @@
+import { urls } from "@/shared/config/urls";
+import useMyself from "@/shared/hooks/use-myself";
+import useToken from "@/shared/hooks/use-token";
+import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
 import {
   Button,
   Flex,
@@ -8,16 +12,12 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import { IconX } from "@tabler/icons-react";
-import React, { ChangeEvent, useEffect } from "react";
+import axios from "axios";
+import { ChangeEvent } from "react";
 import { z } from "zod";
 import { changePasswordValidationSchema } from "../tools/schema";
-import useToken from "@/shared/hooks/use-token";
-import axios from "axios";
-import { urls } from "@/shared/config/urls";
-import useMyself from "@/shared/hooks/use-myself";
-import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
-import { notifications } from "@mantine/notifications";
 import ChangingPasswordInput from "./changing-password-input";
 
 type ModalForChangingPasswordProps = {

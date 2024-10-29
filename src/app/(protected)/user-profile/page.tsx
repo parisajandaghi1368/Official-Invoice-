@@ -1,26 +1,26 @@
 "use client";
 import PasswordInput from "@/app/(unprotected)/(components)/password-input";
-import {
-  Stack,
-  rem,
-  Text,
-  Paper,
-  TextInput,
-  Group,
-  Button,
-} from "@mantine/core";
-import React, { ChangeEvent, useState } from "react";
-import ModalForChangingPassword from "./components/modal-for-changing-password";
-import classes from "./style/style.module.css";
-import { useForm } from "@mantine/form";
+import { urls } from "@/shared/config/urls";
 import useMyself from "@/shared/hooks/use-myself";
 import useToken from "@/shared/hooks/use-token";
-import axios from "axios";
-import { urls } from "@/shared/config/urls";
 import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
+import {
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  TextInput,
+  rem,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
+import axios from "axios";
 import { zodResolver } from "mantine-form-zod-resolver";
+import { ChangeEvent, useState } from "react";
 import { z } from "zod";
+import ModalForChangingPassword from "./components/modal-for-changing-password";
+import classes from "./style/style.module.css";
 import { userProfileValidationSchema } from "./tools/schema";
 export default function UserProfile() {
   const { user } = useMyself();

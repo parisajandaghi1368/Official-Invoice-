@@ -1,10 +1,10 @@
 "use client";
 import { Avatar, Flex, Menu, UnstyledButton, rem } from "@mantine/core";
-import Image from "next/image";
-import MapLogo from "../../../assets/map-logo.svg";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
-import useLogout from "../../../shared/hooks/use-logout";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import MapLogo from "../../../assets/map-logo.svg";
+import useLogout from "../../../shared/hooks/use-logout";
 export default function Header() {
   const logOut = useLogout();
   const router = useRouter();

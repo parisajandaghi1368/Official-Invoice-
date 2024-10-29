@@ -1,7 +1,6 @@
 "use client";
 
 import { Center, Table } from "@mantine/core";
-import React from "react";
 import { TableColumns } from "./official-invoice-data";
 type DynamicTableProps = {
   columns: TableColumns[];

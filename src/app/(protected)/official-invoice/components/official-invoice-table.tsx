@@ -1,14 +1,13 @@
 "use client";
 
 import { Pagination, Stack, Table, rem } from "@mantine/core";
-import React from "react";
-import { OfficialInvoiceColumns } from "./official-invoice-data";
 import DynamicTableHeader from "./dynamic-table-header";
+import { OfficialInvoiceColumns } from "./official-invoice-data";
 
-import DynamicTableBody from "./dynamic-table-body";
+import { Invoice } from "@/shared/utils/types";
 import { useAtom } from "jotai";
 import { pageIndexAtom } from "../atom/atom";
-import { Invoice } from "@/shared/utils/types";
+import DynamicTableBody from "./dynamic-table-body";
 type OfficialInvoiceTable = {
   showLastColumn: boolean;
   invoices: Invoice[];

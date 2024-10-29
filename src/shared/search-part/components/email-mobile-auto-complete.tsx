@@ -1,8 +1,8 @@
-import { Grid, MultiSelectProps } from "@mantine/core";
-import React, { useState } from "react";
-import AsyncMultiSelect from "./async-multi-select";
 import { useEmails } from "@/shared/hooks/use-emails";
 import { useMobiles } from "@/shared/hooks/use-mobiles";
+import { Grid, MultiSelectProps } from "@mantine/core";
+import { useState } from "react";
+import AsyncMultiSelect from "./async-multi-select";
 
 interface AutoCompleteprops {
   emailProp: MultiSelectProps;

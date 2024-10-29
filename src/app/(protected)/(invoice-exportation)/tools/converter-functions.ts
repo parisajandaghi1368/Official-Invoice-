@@ -56,3 +56,14 @@ export function DateConvertor(date: Date) {
 
   return replacePersianNumbers(convertedDate);
 }
+
+export function convertPersianToIso(dateString: string) {
+  const parts = dateString.split(" ");
+
+  const persianDate = parts[1];
+  const time = parts[0];
+
+  const isoString = `${persianDate} ${time}`;
+
+  return isoString;
+}

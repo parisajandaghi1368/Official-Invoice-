@@ -2,9 +2,9 @@
 import { ActionIcon, Group, Loader, Tooltip } from "@mantine/core";
 import { IconFileX, IconHistory } from "@tabler/icons-react";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import InvoicesHistoryDrawer from "./invoices-history-drawer";
-import { useRouter } from "next/navigation";
 
 export default function InvoiceHistory() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

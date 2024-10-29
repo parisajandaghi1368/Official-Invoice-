@@ -1,6 +1,5 @@
-import { Loader, Stack, rem } from "@mantine/core";
-import React from "react";
 import Logo from "@/assets/logo";
+import { Loader, Stack, rem } from "@mantine/core";
 export default function PageLoader() {
   return (
     <Stack h={"100%"} align="center" justify="center">

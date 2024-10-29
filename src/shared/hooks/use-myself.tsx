@@ -1,10 +1,10 @@
 import axios, { AxiosError } from "axios";
 import useSWR from "swr";
 
-import useToken from "./use-token";
-import { MySelf } from "../utils/types";
-import { getCommonHeaders } from "../utils/fetch-helpers";
 import { urls } from "../config/urls";
+import { getCommonHeaders } from "../utils/fetch-helpers";
+import { MySelf } from "../utils/types";
+import useToken from "./use-token";
 
 function userFetcher([url, token]: [url: string, token: string]) {
   const headers = getCommonHeaders({ token });

@@ -1,6 +1,6 @@
+import { Stack } from "@mantine/core";
 import React from "react";
 import Header from "./(components)/header";
-import { Stack } from "@mantine/core";
 import ProtectedPageWrapper from "./(components)/protected-page-wrapper";
 export default function ProtectedLayout({
   children,

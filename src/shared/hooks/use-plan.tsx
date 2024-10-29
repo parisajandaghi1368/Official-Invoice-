@@ -1,13 +1,12 @@
-import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
-import useToken from "@/shared/hooks/use-token";
-import axios from "axios";
-import useLogout from "@/shared/hooks/use-logout";
-import useSWR from "swr";
-import { useEffect, useMemo } from "react";
-import { AxiosError } from "axios";
 import { urls } from "@/shared/config/urls";
+import useLogout from "@/shared/hooks/use-logout";
+import useToken from "@/shared/hooks/use-token";
+import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
 import { useDebouncedValue } from "@mantine/hooks";
+import axios, { AxiosError } from "axios";
 import qs from "qs";
+import { useEffect, useMemo } from "react";
+import useSWR from "swr";
 import { Plan } from "../utils/types";
 
 const plansFetcher = async ([url, token]: [string, string]) => {

@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-import useToken from "@/shared/hooks/use-token";
-import useSWR from "swr";
-import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
-import axios from "axios";
-import { AxiosError } from "axios";
 import useLogout from "@/shared/hooks/use-logout";
+import useToken from "@/shared/hooks/use-token";
+import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
+import axios, { AxiosError } from "axios";
+import { useEffect, useMemo } from "react";
+import useSWR from "swr";
 
 import { urls } from "@/shared/config/urls";
 
@@ -25,8 +24,14 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
       }
     });
 };
+
+type QueryStringParams = {
+  $top: number;
+  $skip: number;
+};
+
 interface UseAllInvoicesParam {
-  queryParam: string | undefined;
+  queryParam?: string | undefined | QueryStringParams;
 }
 
 const useAllInvoices = ({ queryParam }: UseAllInvoicesParam) => {
@@ -44,13 +49,16 @@ const useAllInvoices = ({ queryParam }: UseAllInvoicesParam) => {
       logout();
     }
   }, [data, error, logout]);
-
+  const totalPage = useMemo(() => {
+    return data?.["count"] ?? 0;
+  }, [data]);
   return {
     data,
     error: error as AxiosError,
     isLoading,
     mutate,
     isValidating,
+    totalPage,
   };
 };
 

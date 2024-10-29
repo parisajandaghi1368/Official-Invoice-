@@ -1,7 +1,7 @@
-import { Calendar, CalendarProvider } from "zaman";
-import { useMemo, useState } from "react";
+import { Stack, TextInput } from "@mantine/core";
 import { useClickOutside } from "@mantine/hooks";
-import { Stack, TextInput, rem } from "@mantine/core";
+import { useMemo, useState } from "react";
+import { Calendar, CalendarProvider } from "zaman";
 
 import { replacePersianNumbers } from "../tools/converter-functions";
 interface CalenderParams {

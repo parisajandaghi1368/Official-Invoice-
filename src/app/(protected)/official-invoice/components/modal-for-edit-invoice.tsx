@@ -1,6 +1,5 @@
-import { Button, Group, Modal, Text, Stack, Mark } from "@mantine/core";
+import { Button, Group, Mark, Modal, Stack, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import React from "react";
 type ModalForEditInvoiceProps = {
   opened: boolean;
   onClose: () => void;

@@ -1,6 +1,6 @@
 "use client";
 import { ActionIcon, Group, Loader, Stack, Text, rem } from "@mantine/core";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import OfficialInvoiceTable from "../official-invoice/components/official-invoice-table";
 
@@ -11,7 +11,7 @@ import useTableOfficialInvoices from "../official-invoice/hooks/use-table-offici
 
 export default function CancellationInvoices() {
   const router = useRouter();
-  const { invoices, isValidating, mutate, totalPage, isLoading } =
+  const { data, isValidating, mutate, totalPage, isLoading } =
     useTableOfficialInvoices();
   const [loading, setLoading] = useState(false);
   return (
@@ -52,7 +52,7 @@ export default function CancellationInvoices() {
         ) : (
           <OfficialInvoiceTable
             showLastColumn={true}
-            invoices={invoices}
+            invoices={data}
             totalPages={totalPage}
             mutate={mutate}
           />

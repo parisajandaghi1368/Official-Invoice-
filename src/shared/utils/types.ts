@@ -182,3 +182,19 @@ interface CostPerYear {
   en: number;
   fa: string;
 }
+export interface Discounts {
+  id: number;
+  code: string;
+  type: string;
+  value: string;
+  start_date: null;
+  end_date: string;
+  limit: string;
+  upper_bound: null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null;
+  _count: number;
+  discount_plan: null;
+  discount_usage: null;
+}

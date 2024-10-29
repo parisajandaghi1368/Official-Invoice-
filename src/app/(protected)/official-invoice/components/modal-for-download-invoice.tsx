@@ -9,7 +9,6 @@ import {
   rem,
 } from "@mantine/core";
 import { IconCopy, IconX } from "@tabler/icons-react";
-import React from "react";
 type ModalForDownloadInvoiceProps = {
   opened: boolean;
   onClose: () => void;

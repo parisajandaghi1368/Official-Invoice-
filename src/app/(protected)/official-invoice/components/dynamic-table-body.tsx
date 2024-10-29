@@ -1,3 +1,4 @@
+import { Invoice } from "@/shared/utils/types";
 import { Center, Group, Table, Tooltip, UnstyledButton } from "@mantine/core";
 import {
   IconBan,
@@ -5,10 +6,9 @@ import {
   IconDownload,
   IconPencilMinus,
 } from "@tabler/icons-react";
-import React, { useState } from "react";
-import ModalForOperationsOnInvoices from "./modal-for-edit-invoice";
+import { useState } from "react";
 import ModalForDownloadInvoice from "./modal-for-download-invoice";
-import { Invoice } from "@/shared/utils/types";
+import ModalForOperationsOnInvoices from "./modal-for-edit-invoice";
 
 type DynamicTableBodyProps = {
   showLastColumn: boolean;

@@ -1,15 +1,16 @@
 import {
-  UnstyledButton,
+  Stack,
   Text,
   TextInput,
-  Stack,
   TextInputProps,
+  UnstyledButton,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
-import React, { useState } from "react";
-import useDiscounts from "../hooks/use-discount";
+import { Discounts } from "@/shared/utils/types";
 import { notifications } from "@mantine/notifications";
+import { useState } from "react";
+import useDiscounts from "../hooks/use-discount";
 interface DiscountCodeProp {
   resetDiscountCode: () => void;
   setDiscountError: () => void;
@@ -30,7 +31,7 @@ export default function DiscountCodeInput({
   const { discounts } = useDiscounts();
   const handleRegisterDiscount = () => {
     const isExist = discounts.filter(
-      (item: any) => item.code === discountValue
+      (item: Discounts) => item.code === discountValue
     );
     if (isExist.length === 0) {
       notifications.show({

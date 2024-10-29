@@ -1,9 +1,9 @@
 "use client";
+import SearchInput from "@/shared/search-part/search";
 import { Button, Group, rem } from "@mantine/core";
 import {} from "@tabler/icons-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import ModalForInvoiceExportation from "../(invoice-exportation)/components/modal-for-invoice-export";
-import SearchInput from "@/shared/search-part/search";
 type SearchProps = {
   isInHomePage: boolean;
 };

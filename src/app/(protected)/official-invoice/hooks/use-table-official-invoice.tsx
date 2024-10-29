@@ -1,15 +1,14 @@
-import { useEffect, useMemo } from "react";
-import useToken from "@/shared/hooks/use-token";
-import useSWR from "swr";
-import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
-import axios from "axios";
-import { AxiosError } from "axios";
-import useLogout from "@/shared/hooks/use-logout";
-import { useDebouncedValue } from "@mantine/hooks";
 import { urls } from "@/shared/config/urls";
+import { ITEMS_PER_PAGE } from "@/shared/constants/overlays-constant";
+import useLogout from "@/shared/hooks/use-logout";
+import useToken from "@/shared/hooks/use-token";
+import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
+import { useDebouncedValue } from "@mantine/hooks";
+import axios, { AxiosError } from "axios";
 import { useAtomValue } from "jotai";
+import { useEffect, useMemo } from "react";
+import useSWR from "swr";
 import { pageIndexAtom, searchTermAtom } from "../atom/atom";
-
 const projectsFetcher = async ([url, token]: [string, string]) => {
   return axios
     .get(url, {
@@ -25,29 +24,18 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
     });
 };
 
-// function useAllInvoices({ query }) {
-//   return useSWR(`${url.invoices}${query ? `?${query}` : ""}`, fetcher);
-// }
-
 const useTableOfficialInvoices = () => {
   const pageIndex = useAtomValue(pageIndexAtom);
   const searchTerm = useDebouncedValue(useAtomValue(searchTermAtom), 500);
   const { token } = useToken();
   const logout = useLogout();
 
-  const skip = pageIndex && (pageIndex - 1) * 10;
-
-  // const { data, error, isLoading, mutate, isValidating } = useAllInvoices({
-  //   query: qs({
-  //     $top: 10,
-  //     $skip: skip,
-  //   }),
-  // });
+  const skip = pageIndex && (pageIndex - 1) * ITEMS_PER_PAGE;
 
   const { data, error, isLoading, mutate, isValidating } = useSWR(
     token
       ? [
-          `${urls.invoices}?$top=${10}&$skip=${skip}
+          `${urls.invoices}?$top=${ITEMS_PER_PAGE}&$skip=${skip}
           `,
           token,
         ]

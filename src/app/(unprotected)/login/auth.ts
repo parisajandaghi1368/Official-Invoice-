@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getCommonHeaders } from "../../../shared/utils/fetch-helpers";
 import { urls } from "../../../shared/config/urls";
+import { getCommonHeaders } from "../../../shared/utils/fetch-helpers";
 const paths = {
   login: "/tokens/user",
   token: "/tokens/validate",

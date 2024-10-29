@@ -1,6 +1,12 @@
+import useAllInvoices from "@/shared/hooks/use-all-invoices";
+import { Invoice } from "@/shared/utils/types";
 import { Divider, Drawer, Group, Mark, Stack, Text } from "@mantine/core";
 import { IconHistory, IconX } from "@tabler/icons-react";
-import React from "react";
+
+import {
+  convertPersianToIso,
+  replaceEnglishNumbers,
+} from "../../(invoice-exportation)/tools/converter-functions";
 type Drawerprops = {
   opened: boolean;
   onClose: () => void;
@@ -9,33 +15,8 @@ export default function InvoicesHistoryDrawer({
   opened,
   onClose,
 }: Drawerprops) {
-  const history = [
-    {
-      date: "۹۸/۰۸/۰۸ - ۱۴:۴۳",
-      invoiceState: "ابطال فاکتور",
-      company: "نقش اول کیفیت",
-    },
-    {
-      date: "۹۸/۰۸/۰۸ - ۱۴:۴۳",
-      invoiceState: "ابطال فاکتور",
-      company: "نقش اول کیفیت",
-    },
-    {
-      date: "۹۸/۰۸/۰۸ - ۱۴:۴۳",
-      invoiceState: "ویرایش فاکتور",
-      company: "نقش اول کیفیت",
-    },
-    {
-      date: "۹۸/۰۸/۰۸ - ۱۴:۴۳",
-      invoiceState: "ابطال فاکتور",
-      company: "نقش اول کیفیت",
-    },
-    {
-      date: "۹۸/۰۸/۰۸ - ۱۴:۴۳",
-      invoiceState: "ابطال فاکتور",
-      company: "شرکت نقش اول کیفیت گستران آفریقای مرکزی",
-    },
-  ];
+  const { data } = useAllInvoices({});
+
   return (
     <Drawer.Root
       transitionProps={{
@@ -60,27 +41,38 @@ export default function InvoicesHistoryDrawer({
           <IconX size={16} />
         </Drawer.Header>
         <Drawer.Body>
-          {history.map((item, index) => (
-            <Stack key={index} my={"xs"}>
-              <Text>{item.date}</Text>
-              <Group>
-                <Text fz={"xs"} fw={"bold"} c="dimmed">
-                  {item.invoiceState}
-                </Text>
-                <Mark
-                  fz={"xs"}
-                  fw={"bold"}
-                  c="dimmed"
-                  p={"5px"}
-                  color="#F7F7F8"
-                >
-                  {item.company}
-                </Mark>
-              </Group>
+          {data?.map((item: Invoice, index: string) => {
+            const englishToPersianNumber = replaceEnglishNumbers(
+              item.created_at
+            );
+            const persianToIsoDate = convertPersianToIso(
+              englishToPersianNumber
+            );
+            return (
+              <Stack key={index} my={"xs"}>
+                <Text>{persianToIsoDate}</Text>
+                <Group>
+                  <Text fz={"xs"} fw={"bold"} c="dimmed">
+                    {item?.client?.user.name}
+                  </Text>
 
-              <Divider />
-            </Stack>
-          ))}
+                  {item?.client?.user?.company && (
+                    <Mark
+                      fz={"xs"}
+                      fw={"bold"}
+                      c="dimmed"
+                      p={"5px"}
+                      color="#F7F7F8"
+                    >
+                      {item?.client?.user?.company}
+                    </Mark>
+                  )}
+                </Group>
+
+                <Divider />
+              </Stack>
+            );
+          })}
         </Drawer.Body>
       </Drawer.Content>
     </Drawer.Root>

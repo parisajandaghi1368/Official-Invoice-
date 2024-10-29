@@ -1,11 +1,11 @@
-import ModalForFilterInvoice from "./components/modal-for-filter-invoice";
 import { Button, Divider, Flex, Input, rem } from "@mantine/core";
 import {
   IconChevronDown,
   IconChevronUp,
   IconSearch,
 } from "@tabler/icons-react";
-import React, { useState } from "react";
+import { useState } from "react";
+import ModalForFilterInvoice from "./components/modal-for-filter-invoice";
 
 export default function SearchInput() {
   const [isModalForFilterOpen, setIsModalForFilterOpen] = useState(false);

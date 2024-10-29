@@ -1,11 +1,11 @@
-import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
-import useToken from "@/shared/hooks/use-token";
-import axios from "axios";
 import useLogout from "@/shared/hooks/use-logout";
+import useToken from "@/shared/hooks/use-token";
+import { getCommonHeaders } from "@/shared/utils/fetch-helpers";
+import axios from "axios";
 
-import useSWR from "swr";
-import { useEffect } from "react";
 import { AxiosError } from "axios";
+import { useEffect } from "react";
+import useSWR from "swr";
 
 import { urls } from "@/shared/config/urls";
 const discountsFetcher = async ([url, token]: [string, string]) => {

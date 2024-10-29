@@ -1,5 +1,5 @@
-import useToken from "./use-token";
 import { useRouter } from "next/navigation";
+import useToken from "./use-token";
 
 const useLogout = () => {
   const { removeToken } = useToken();
