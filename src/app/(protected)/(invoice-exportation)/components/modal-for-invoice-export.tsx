@@ -34,7 +34,7 @@ export default function ModalForInvoiceExportation({
   const [checked, setChecked] = useState(false);
   const [isInputDisabled, setIsInputDisabled] = useState(false);
   const [date, setDate] = useState(new Date());
-
+  const [isExportButtonActive, setIsExportButtonActive] = useState(false);
   useEffect(() => {
     const today = new Date();
     const validDate = date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
@@ -81,37 +81,32 @@ export default function ModalForInvoiceExportation({
 
     if (hasErrors) return;
     setConfirm(true);
-    console.log("dfsdf");
+    setIsExportButtonActive(true);
+    setChecked(false);
   };
-  // useEffect(() => {
-  //   if (!opened) {
-  //     invoiceExportationForm.reset();
-  //     setConfirm(false);
-  //   }
-  // }, [invoiceExportationForm, opened]);
+  const resetForm = () => {
+    invoiceExportationForm.reset();
+    setConfirm(false);
+    setIsInputDisabled(false);
+    setIsExportButtonActive(false);
+    onClose();
+  };
+  const exportInvoice = () => {
+    resetForm();
+    notifications.show({
+      message: "فاکتور شما صادر شد!",
+      color: "green",
+    });
+  };
+
   return (
     <>
-      <Modal
-        size={"lg"}
-        opened={opened}
-        onClose={() => {
-          onClose();
-        }}
-      >
+      <Modal size={"lg"} opened={opened} onClose={resetForm}>
         <Stack p={"lg"}>
           <Group justify="space-between">
             <Text size="md">ایجاد فاکتور دستی</Text>
             <UnstyledButton>
-              <IconX
-                size={18}
-                color="#667085"
-                onClick={() => {
-                  onClose();
-                  setConfirm(!confirm);
-                  setIsInputDisabled(false);
-                  invoiceExportationForm.reset();
-                }}
-              />
+              <IconX size={18} color="#667085" onClick={resetForm} />
             </UnstyledButton>
           </Group>
           <SimpleGrid
@@ -179,34 +174,31 @@ export default function ModalForInvoiceExportation({
               onChange={(event) => {
                 setChecked(event.currentTarget.checked);
                 setIsInputDisabled(!isInputDisabled);
-                console.log("isInputDisabled", isInputDisabled);
               }}
             />
           )}
-          <Group w="100%" justify="center" align="center" pt="xl">
-            {confirm ? (
-              <Group w="100%" justify="center">
-                <Button
-                  variant="white"
-                  style={{ fontSize: 16, fontWeight: 400, color: "black" }}
-                  onClick={() => {
-                    setConfirm(!confirm);
-                    setIsInputDisabled(false);
-                  }}
-                >
-                  انصراف
-                </Button>
-                <Button
-                  disabled={!checked}
-                  onClick={() => {
-                    onClose();
-                    invoiceExportationForm.reset();
-                  }}
-                >
-                  صدور فاکتور
-                </Button>
-              </Group>
-            ) : (
+
+          {isExportButtonActive ? (
+            <Group w="100%" justify="center">
+              <Button
+                variant="white"
+                style={{ fontSize: 16, fontWeight: 400, color: "black" }}
+                onClick={() => {
+                  setIsExportButtonActive(false);
+                  setChecked(!checked);
+                  setConfirm(!confirm);
+                  setIsInputDisabled(false);
+                }}
+              >
+                انصراف
+              </Button>
+              <Button disabled={!checked} onClick={exportInvoice}>
+                صدور فاکتور
+              </Button>
+            </Group>
+          ) : (
+            <Group w="100%" justify="center" align="center" pt="xl">
+              {" "}
               <Button
                 onClick={() => {
                   handleSubmit();
@@ -214,8 +206,8 @@ export default function ModalForInvoiceExportation({
               >
                 تایید
               </Button>
-            )}
-          </Group>
+            </Group>
+          )}
         </Stack>
       </Modal>
     </>

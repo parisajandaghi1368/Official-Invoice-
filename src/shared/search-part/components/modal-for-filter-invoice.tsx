@@ -82,7 +82,13 @@ export default function ModalForFilterInvoice({ opened, onClose }: ModalProps) {
   };
 
   return (
-    <Modal size={"80%"} opened={opened} onClose={onClose}>
+    <Modal
+      size={"80%"}
+      opened={opened}
+      onClose={() => {
+        filterForm.reset(), onClose();
+      }}
+    >
       <Grid p={"md"}>
         <Grid.Col span={2}>
           <CustomCalendar
