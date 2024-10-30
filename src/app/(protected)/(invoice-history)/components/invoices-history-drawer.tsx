@@ -1,12 +1,23 @@
-import useAllInvoices from "@/shared/hooks/use-all-invoices";
 import { Invoice } from "@/shared/utils/types";
-import { Divider, Drawer, Group, Mark, Stack, Text } from "@mantine/core";
+import {
+  Divider,
+  Drawer,
+  Group,
+  Mark,
+  Pagination,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { IconHistory, IconX } from "@tabler/icons-react";
 
 import {
   convertPersianToIso,
   replaceEnglishNumbers,
 } from "../../(invoice-exportation)/tools/converter-functions";
+import { useHistories } from "@/shared/hooks/use-history";
+import { pageIndexAtom } from "../../official-invoice/atom/atom";
+import { useAtom } from "jotai";
+import { ITEMS_PER_PAGE } from "@/shared/constants/overlays-constant";
 type Drawerprops = {
   opened: boolean;
   onClose: () => void;
@@ -15,7 +26,12 @@ export default function InvoicesHistoryDrawer({
   opened,
   onClose,
 }: Drawerprops) {
-  const { data } = useAllInvoices({});
+  const { data, totalPage } = useHistories();
+  const [pageIndex, setPageIndex] = useAtom(pageIndexAtom);
+  const handlePage = (newPageIndex: number) => {
+    setPageIndex(newPageIndex);
+  };
+  const totalPages = Math.floor(totalPage / ITEMS_PER_PAGE);
 
   return (
     <Drawer.Root
@@ -70,6 +86,13 @@ export default function InvoicesHistoryDrawer({
                 </Group>
 
                 <Divider />
+                {totalPages > 0 && (
+                  <Pagination
+                    total={totalPages}
+                    value={pageIndex}
+                    onChange={handlePage}
+                  />
+                )}
               </Stack>
             );
           })}

@@ -1,31 +1,24 @@
 import { useMemo } from "react";
 
-import { useDebouncedValue } from "@mantine/hooks";
-
-import { Invoice } from "../utils/types";
 import useAllInvoices from "./use-all-invoices";
+import { useAtomValue } from "jotai";
+import { pageIndexAtom } from "@/app/(protected)/official-invoice/atom/atom";
+import { ITEMS_PER_PAGE } from "../constants/overlays-constant";
 
-interface UseprojectCodeParam {
-  searchProjectCode: string;
-}
-
-const useProjectCode = ({ searchProjectCode }: UseprojectCodeParam) => {
-  const [debouncedSearch] = useDebouncedValue(searchProjectCode || "", 500);
-  const { data, isLoading } = useAllInvoices({
-    queryParam: debouncedSearch
-      ? `$filter=id eq'${debouncedSearch}'`
-      : undefined,
+export function useHistories() {
+  const pageIndex = useAtomValue(pageIndexAtom);
+  const skip = pageIndex && (pageIndex - 1) * ITEMS_PER_PAGE;
+  const { data, mutate, isLoading } = useAllInvoices({
+    queryParam: `&$skip=${skip}`,
   });
-
-  const projectCode = useMemo(() => {
-    if (!data) return [];
-    return data?.map((item: Invoice) => String(item?.id));
+  const totalPage = useMemo(() => {
+    return data?.["count"] ?? 0;
   }, [data]);
-
   return {
-    projectCode,
-    loadingProjectCode: isLoading,
+    emailLoading: isLoading,
+    mutate,
+    data,
+    pageIndex,
+    totalPage,
   };
-};
-
-export default useProjectCode;
+}
