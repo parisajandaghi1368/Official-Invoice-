@@ -9,13 +9,13 @@ import { useAtom } from "jotai";
 import { pageIndexAtom } from "../atom/atom";
 import DynamicTableBody from "./dynamic-table-body";
 type OfficialInvoiceTable = {
-  showLastColumn: boolean;
+  withActionsColumn: boolean;
   invoices: Invoice[];
   totalPages: number;
   mutate: () => void;
 };
 export default function OfficialInvoiceTable({
-  showLastColumn = true,
+  withActionsColumn = true,
   invoices,
   totalPages,
 }: OfficialInvoiceTable) {
@@ -34,9 +34,12 @@ export default function OfficialInvoiceTable({
       >
         <DynamicTableHeader
           columns={OfficialInvoiceColumns}
-          showLastColumn={showLastColumn}
+          withActionsColumn={withActionsColumn}
         />
-        <DynamicTableBody showLastColumn={showLastColumn} invoices={invoices} />
+        <DynamicTableBody
+          withActionsColumn={withActionsColumn}
+          invoices={invoices}
+        />
       </Table>
       <Pagination
         total={totalPages}

@@ -77,7 +77,6 @@ export default function ModalForInvoiceExportation({
   };
   const handleSubmit = () => {
     const { hasErrors } = invoiceExportationForm.validate();
-    console.log({ hasErrors });
 
     if (hasErrors) return;
     setConfirm(true);

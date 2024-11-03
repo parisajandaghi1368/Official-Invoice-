@@ -32,7 +32,7 @@ export default function OfficialInvoicePage() {
           </Group>
         ) : (
           <OfficialInvoiceTable
-            showLastColumn={true}
+            withActionsColumn={true}
             invoices={invoices}
             totalPages={totalPages}
             mutate={mutate}

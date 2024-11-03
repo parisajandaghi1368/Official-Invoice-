@@ -15,10 +15,6 @@ export function useMobiles({ searchMobile }: UseMobilesParams) {
       ? `$filter=substringof('${debouncedSearch}',mobile) eq true`
       : undefined,
   });
-  console.log(
-    "datafilter",
-    data?.map((item: User) => item?.company)
-  );
 
   const mobiles = useMemo(() => {
     if (!data) return [];

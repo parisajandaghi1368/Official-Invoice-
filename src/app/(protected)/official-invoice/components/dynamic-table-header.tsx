@@ -4,13 +4,13 @@ import { Center, Table } from "@mantine/core";
 import { TableColumns } from "./official-invoice-data";
 type DynamicTableProps = {
   columns: TableColumns[];
-  showLastColumn: boolean;
+  withActionsColumn: boolean;
 };
 export default function DynamicTableHeader({
   columns,
-  showLastColumn = true,
+  withActionsColumn = true,
 }: DynamicTableProps) {
-  const filteredColumns = showLastColumn ? columns : columns.slice(0, -1);
+  const filteredColumns = withActionsColumn ? columns : columns.slice(0, -1);
   return (
     <Table.Thead>
       <Table.Tr>

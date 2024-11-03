@@ -49,7 +49,6 @@ export default function ModalForChangingPassword({
     if (!userToken) return null;
     const { hasErrors } = form.validate();
     if (!hasErrors) {
-      console.log({ passwordInfo });
       try {
         await axios.patch(`${urls.users}/${user?.id}`, passwordInfo, {
           headers: getCommonHeaders({ token: userToken }),

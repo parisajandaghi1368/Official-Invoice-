@@ -86,7 +86,6 @@ export default function UserProfile() {
               {...form.getInputProps("user_name")}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 form.setFieldValue("user_name", event.target.value);
-                console.log("typeof event.target", typeof event.target);
               }}
             />
             <TextInput

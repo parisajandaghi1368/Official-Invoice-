@@ -13,7 +13,6 @@ const projectsFetcher = async ([url, token]: [string, string]) => {
       headers: getCommonHeaders({ token }),
     })
     .then((res) => {
-      console.log("res?.data", res?.data?.value);
       return res?.data?.value;
     })
     .catch((err) => {

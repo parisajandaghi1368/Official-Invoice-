@@ -27,7 +27,6 @@ export default function InvoiceNumAndCompanyAutoComplete({
   const { invoiceNumbers, invoiceNumLoading } = useInvoiceNumbers({
     searchInvoiceNum,
   });
-  console.log("invoiceNumber", invoiceNumbers);
 
   return (
     <>

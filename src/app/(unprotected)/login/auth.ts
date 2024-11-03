@@ -53,7 +53,6 @@ export const login = async ({
     localStorage.setItem("userId", data.username);
     return { data: responseData as LoginResData, error: null };
   } catch (err: any) {
-    console.log("err", err);
     return { data: null, error: err?.response?.data as LoginResErrorData };
   }
 };

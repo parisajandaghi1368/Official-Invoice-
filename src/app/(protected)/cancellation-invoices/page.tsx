@@ -11,7 +11,7 @@ import useTableOfficialInvoices from "../official-invoice/hooks/use-table-offici
 
 export default function CancellationInvoices() {
   const router = useRouter();
-  const { data, isValidating, mutate, totalPage, isLoading } =
+  const { invoices, isValidating, mutate, totalPage, isLoading } =
     useTableOfficialInvoices();
   const [loading, setLoading] = useState(false);
   return (
@@ -51,8 +51,8 @@ export default function CancellationInvoices() {
           </Group>
         ) : (
           <OfficialInvoiceTable
-            showLastColumn={true}
-            invoices={data}
+            withActionsColumn={false}
+            invoices={invoices}
             totalPages={totalPage}
             mutate={mutate}
           />

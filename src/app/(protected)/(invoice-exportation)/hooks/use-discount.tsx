@@ -15,7 +15,6 @@ const discountsFetcher = async ([url, token]: [string, string]) => {
     })
     .then((res) => res?.data)
     .catch((err) => {
-      console.log("err");
       if (err.response && err.response.status === 404) {
         return [];
       } else {

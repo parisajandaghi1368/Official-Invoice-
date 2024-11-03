@@ -11,7 +11,7 @@ import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 export const metadata = {
   title: "فاکتور رسمی",
-  description: "I have followed setup instructions carefully",
+  description: "official invoice App",
 };
 
 const theme = createTheme({
